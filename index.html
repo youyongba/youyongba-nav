@@ -470,7 +470,7 @@
         }
 
         .app-save {
-            display: flex;
+            display: none; /* 隐藏收藏图标 */
             align-items: center;
             justify-content: center;
             width: 36px;
@@ -486,6 +486,8 @@
         .app-save:hover {
             background-color: rgba(229, 96, 69, 0.2);
         }
+
+
         
         /* 页脚 */
         footer {
@@ -1591,10 +1593,7 @@
             <div class="footer-column">
                 <h3>联系我们</h3>
                 <ul>
-                    <li><a href="#"><i class="fas fa-envelope"></i>contact@aiwebdao.com</a></li>
-                    <li><a href="#"><i class="fab fa-twitter"></i>@AIWebDAO</a></li>
-                    <li><a href="#"><i class="fab fa-discord"></i>AIWebDAO社区</a></li>
-                    <li><a href="#"><i class="fas fa-headset"></i>在线客服</a></li>
+                    <li><a href="mailto:55377146@qq.com"><i class="fas fa-envelope"></i>55377146@qq.com</a></li>
                 </ul>
             </div>
 
@@ -2057,21 +2056,7 @@
             }
         });
 
-        // 收藏功能
-        document.querySelectorAll('.app-save').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const icon = this.querySelector('i');
-                if (icon.classList.contains('far')) {
-                    icon.classList.remove('far');
-                    icon.classList.add('fas');
-                    this.style.color = '#e74c3c';
-                } else {
-                    icon.classList.remove('fas');
-                    icon.classList.add('far');
-                    this.style.color = '';
-                }
-            });
-        });
+        // 收藏功能已移除
 
         // 导航栏活跃状态
         const sections = document.querySelectorAll('section');
