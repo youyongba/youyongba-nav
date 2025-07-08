@@ -2046,6 +2046,67 @@
         // 初始化视频号弹窗功能
         initializeVideoModal();
 
+        // 初始化重定向链接
+        function initializeRedirectLinks() {
+            document.querySelectorAll('.app-card').forEach(card => {
+                const appLink = card.querySelector('.app-link');
+                const appNameElement = card.querySelector('.app-name');
+                // 获取应用名称，排除验证图标
+                const tempDiv = appNameElement.cloneNode(true);
+                const verifiedIcon = tempDiv.querySelector('.verified');
+                if (verifiedIcon) {
+                    verifiedIcon.remove();
+                }
+                const appName = tempDiv.textContent.trim();
+                const appDesc = card.querySelector('.app-desc').textContent.trim();
+                const originalUrl = appLink.getAttribute('href');
+                const section = card.closest('section').id;
+                
+                // 获取分类信息
+                let category = '';
+                switch(section) {
+                    case 'ai':
+                        category = 'AI应用';
+                        break;
+                    case 'web3':
+                        category = 'Web3应用';
+                        break;
+                    case 'tools':
+                        category = '开发工具';
+                        break;
+                    case 'learn':
+                        category = '学习资源';
+                        break;
+                    case 'utilities':
+                        category = '实用工具';
+                        break;
+                    default:
+                        category = '其他';
+                }
+                
+                // 获取图标URL（使用应用图片）
+                const imgElement = card.querySelector('.app-img img');
+                const iconUrl = imgElement ? imgElement.src : '';
+                
+                // 构建重定向URL
+                const redirectUrl = `redirect.html?` + 
+                    `name=${encodeURIComponent(appName)}&` +
+                    `url=${encodeURIComponent(originalUrl)}&` +
+                    `desc=${encodeURIComponent(appDesc)}&` +
+                    `icon=${encodeURIComponent(iconUrl)}&` +
+                    `category=${encodeURIComponent(category)}`;
+                
+                // 更新链接
+                appLink.href = redirectUrl;
+                appLink.removeAttribute('target'); // 移除target="_blank"，在同一窗口跳转
+            });
+        }
+        
+        // 在图片加载处理完成后初始化重定向链接
+        setTimeout(() => {
+            initializeRedirectLinks();
+        }, 1500);
+
         // 导航栏滚动效果
         window.addEventListener('scroll', function() {
             const nav = document.querySelector('nav');
