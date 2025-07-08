@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI与Web3应用导航 - 后台登录</title>
+    <!-- 引入Google字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- 引入Font Awesome图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* 结构色 */
+            --dark-color: #1a1a1a;
+            --text-color: #4d4d4d;
+            --text-light: #999999;
+            --border-color: #cccccc;
+            --bg-light: #e5e5e5;
+            --light-color: #f2f2f2;
+            
+            /* 品牌色 */
+            --primary-color: #e56045;
+            --secondary-color: #cc553d;
+            --light-primary: #ffb9b2;
+            
+            /* 指示器色 */
+            --info-color: #00aeef;
+            --info-light: #8bdfff;
+            --info-dark: #007ba9;
+            
+            --success-color: #53cfc8;
+            --success-light: #a1e5e2;
+            --success-dark: #609996;
+            
+            --warning-color: #f7941d;
+            --warning-light: #ffd199;
+            --warning-dark: #cc7b18;
+            
+            --neutral-color: #736357;
+            
+            /* 其他 */
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --shadow-lg: 0 12px 24px rgba(0,0,0,0.15);
+            --transition: all 0.3s ease;
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--bg-light), var(--light-color));
+        }
+        
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            background-color: white;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .login-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .login-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(rgba(255, 255, 255, 0.1), transparent 70%);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+        
+        .login-header h1 {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .login-header h1 i {
+            margin-right: 10px;
+            font-size: 1.8rem;
+        }
+        
+        .login-header p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+        
+        .login-form {
+            padding: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(229, 96, 69, 0.2);
+        }
+        
+        .form-group .input-with-icon {
+            position: relative;
+        }
+        
+        .form-group .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+        
+        .form-group .input-with-icon input {
+            padding-left: 45px;
+        }
+        
+        .form-group .forgot-password {
+            display: block;
+            text-align: right;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            color: var(--info-dark);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .form-group .forgot-password:hover {
+            color: var(--primary-color);
+        }
+        
+        .form-actions {
+            margin-top: 2rem;
+        }
+        
+        .btn-login {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 3px 8px rgba(229, 96, 69, 0.25);
+        }
+        
+        .btn-login:hover {
+            box-shadow: 0 5px 15px rgba(229, 96, 69, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .login-footer {
+            padding: 1rem 2rem;
+            text-align: center;
+            border-top: 1px solid var(--bg-light);
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        .login-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .login-footer a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 480px) {
+            .login-container {
+                max-width: 90%;
+                margin: 0 20px;
+            }
+            
+            .login-header {
+                padding: 1.5rem;
+            }
+            
+            .login-form {
+                padding: 1.5rem;
+            }
+        }
+        
+        /* 滚动条美化 */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1><i class="fas fa-robot"></i> AI与Web3导航</h1>
+            <p>管理员登录</p>
+        </div>
+        
+        <form class="login-form" id="loginForm">
+            <div class="form-group">
+                <label for="username">用户名</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="username" name="username" placeholder="请输入用户名" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">密码</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" name="password" placeholder="请输入密码" required>
+                </div>
+                <a href="#" class="forgot-password">忘记密码?</a>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn-login">登 录</button>
+            </div>
+        </form>
+        
+        <div class="login-footer">
+            <p>© 2023 AI与Web3导航 | <a href="#">回到前台</a></p>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // 这里是简单的前端验证，实际应用中应该使用后端验证
+            if (username === 'admin' && password === 'admin123') {
+                window.location.href = 'admin_dashboard.html';
+            } else {
+                alert('用户名或密码错误!');
+            }
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>正在跳转... - AI与Web3应用导航</title>
+    <!-- 引入Google字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- 引入Font Awesome图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* 结构色 */
+            --dark-color: #1a1a1a;
+            --dark-bg: #282d3e;
+            --darker-bg: #1f2333;
+            --text-color: #4d4d4d;
+            --text-light: #999999;
+            --border-color: #cccccc;
+            --bg-light: #f0f2f5;
+            --light-color: #ffffff;
+            
+            /* 品牌色 */
+            --primary-color: #e56045;
+            --secondary-color: #cc553d;
+            --light-primary: #ffb9b2;
+            
+            /* 指示器色 */
+            --info-color: #00aeef;
+            --info-light: #8bdfff;
+            --info-bg: rgba(0, 174, 239, 0.1);
+            --info-dark: #007ba9;
+            
+            --success-color: #53cfc8;
+            --success-light: #a1e5e2;
+            --success-bg: rgba(83, 207, 200, 0.1);
+            --success-dark: #609996;
+            
+            --warning-color: #f7941d;
+            --warning-light: #ffd199;
+            --warning-bg: rgba(247, 148, 29, 0.1);
+            --warning-dark: #cc7b18;
+            
+            --danger-color: #f44336;
+            --danger-light: #ffcdd2;
+            --danger-bg: rgba(244, 67, 54, 0.1);
+            --danger-dark: #d32f2f;
+            
+            --neutral-color: #736357;
+            
+            /* 其他 */
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* 顶部导航 */
+        .header {
+            background-color: var(--primary-color);
+            padding: 0.7rem 1.5rem;
+            color: white;
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo i {
+            font-size: 1.5rem;
+        }
+        
+        .logo-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        /* 主容器 */
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 1.5rem;
+            flex: 1;
+        }
+        
+        /* 跳转信息卡片 */
+        .redirect-card {
+            background-color: white;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .redirect-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: var(--radius-md);
+            background-color: var(--bg-light);
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+        
+        .redirect-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .redirect-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+        
+        .redirect-desc {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+        
+        .redirect-info {
+            background-color: var(--info-bg);
+            color: var(--info-dark);
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .redirect-countdown {
+            font-weight: 600;
+            color: var(--info-color);
+            font-size: 1.2rem;
+            margin: 0 0.5rem;
+        }
+        
+        .skip-btn {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .skip-btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .skip-btn i {
+            margin-left: 0.5rem;
+        }
+        
+        /* 广告区域 */
+        .ad-section {
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title::before {
+            content: "";
+            display: block;
+            width: 4px;
+            height: 1rem;
+            background-color: var(--primary-color);
+            margin-right: 0.5rem;
+            border-radius: 2px;
+        }
+        
+        .primary-ad {
+            background-color: white;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+        
+        .ad-badge {
+            position: absolute;
+            top: 0.7rem;
+            right: 0.7rem;
+            background-color: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 2px;
+        }
+        
+        .primary-ad img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .primary-ad-content {
+            padding: 1.5rem;
+        }
+        
+        .primary-ad-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.7rem;
+            color: var(--dark-color);
+        }
+        
+        .primary-ad-text {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        
+        .ad-btn {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--info-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        
+        .ad-btn:hover {
+            background-color: var(--info-dark);
+        }
+        
+        .ad-btn i {
+            margin-left: 0.5rem;
+            font-size: 0.8rem;
+        }
+        
+        .secondary-ads {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .secondary-ad {
+            background-color: white;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+            transition: var(--transition);
+        }
+        
+        .secondary-ad:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .secondary-ad img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .secondary-ad-content {
+            padding: 1rem;
+        }
+        
+        .secondary-ad-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+        
+        .secondary-ad-text {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 0.7rem;
+            height: 2.7rem;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        
+        /* 页脚 */
+        .footer {
+            background-color: var(--dark-bg);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 1.5rem;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        .footer a {
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer a:hover {
+            color: var(--light-primary);
+        }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .secondary-ads {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            .redirect-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 2rem;
+            }
+            
+            .redirect-title {
+                font-size: 1.3rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .secondary-ads {
+                grid-template-columns: 1fr;
+            }
+            
+            .redirect-card {
+                padding: 1.5rem;
+            }
+            
+            .redirect-info {
+                flex-direction: column;
+                gap: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-robot"></i>
+                <div class="logo-text">AI与Web3应用导航</div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- 主容器 -->
+    <div class="container">
+        <!-- 跳转信息卡片 -->
+        <div class="redirect-card">
+            <div class="redirect-icon">
+                <img src="https://cdn.pixabay.com/photo/2023/01/23/09/25/chatgpt-7738605_960_720.png" alt="ChatGPT">
+            </div>
+            <h1 class="redirect-title">正在前往 ChatGPT</h1>
+            <p class="redirect-desc">全球最受欢迎的AI聊天助手，由OpenAI开发</p>
+            
+            <div class="redirect-info">
+                页面将在 <span class="redirect-countdown" id="countdown">5</span> 秒后自动跳转，或者点击下方按钮立即前往
+            </div>
+            
+            <a href="https://chat.openai.com" class="skip-btn" id="skipBtn">
+                立即前往 <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <!-- 广告区域 -->
+        <div class="ad-section">
+            <h2 class="section-title">推荐内容</h2>
+            
+            <!-- 主要广告 -->
+            <div class="primary-ad">
+                <div class="ad-badge">广告</div>
+                <img src="https://cdn.pixabay.com/photo/2021/09/19/15/52/artificial-intelligence-6638415_960_720.jpg" alt="AI课程">
+                <div class="primary-ad-content">
+                    <h3 class="primary-ad-title">AI人工智能进阶课程 - 从入门到精通</h3>
+                    <p class="primary-ad-text">通过我们精心设计的课程，掌握AI领域最前沿的技术和知识，无论你是初学者还是已有基础的开发者，都能在这里找到适合自己的学习路径。现在报名，享受限时85折优惠！</p>
+                    <a href="#" class="ad-btn">了解更多 <i class="fas fa-angle-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- 次要广告区域 -->
+            <div class="secondary-ads">
+                <div class="secondary-ad">
+                    <div class="ad-badge">广告</div>
+                    <img src="https://cdn.pixabay.com/photo/2023/06/13/16/05/ai-generated-8062415_960_720.jpg" alt="AI绘画">
+                    <div class="secondary-ad-content">
+                        <h3 class="secondary-ad-title">AI绘画工具使用指南</h3>
+                        <p class="secondary-ad-text">从Midjourney到DALL-E，掌握当下最热门的AI绘画工具</p>
+                        <a href="#" class="ad-btn">查看详情 <i class="fas fa-angle-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="secondary-ad">
+                    <div class="ad-badge">广告</div>
+                    <img src="https://cdn.pixabay.com/photo/2018/05/21/00/30/blockchain-3417044_960_720.jpg" alt="区块链">
+                    <div class="secondary-ad-content">
+                        <h3 class="secondary-ad-title">Web3开发者峰会</h3>
+                        <p class="secondary-ad-text">全球顶尖Web3专家齐聚一堂，分享最新区块链技术与应用</p>
+                        <a href="#" class="ad-btn">立即报名 <i class="fas fa-angle-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="secondary-ad">
+                    <div class="ad-badge">广告</div>
+                    <img src="https://cdn.pixabay.com/photo/2018/09/16/22/06/software-3682509_960_720.jpg" alt="开发工具">
+                    <div class="secondary-ad-content">
+                        <h3 class="secondary-ad-title">AI编程助手限时优惠</h3>
+                        <p class="secondary-ad-text">提升编程效率的必备工具，现在购买享受6折优惠</p>
+                        <a href="#" class="ad-btn">获取优惠 <i class="fas fa-angle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer class="footer">
+        <p>© 2023 AI与Web3应用导航 | <a href="#">隐私政策</a> | <a href="#">免责声明</a></p>
+    </footer>
+    
+    <script>
+        // 获取URL参数的函数
+        function getUrlParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+        
+        // 应用信息
+        const appName = getUrlParam('name') || 'ChatGPT';
+        const appDesc = getUrlParam('desc') || '全球最受欢迎的AI聊天助手，由OpenAI开发';
+        const appUrl = getUrlParam('url') || 'https://chat.openai.com';
+        const appIcon = getUrlParam('icon') || 'https://cdn.pixabay.com/photo/2023/01/23/09/25/chatgpt-7738605_960_720.png';
+        const appCategory = getUrlParam('category') || 'AI应用';
+        
+        // 更新页面内容
+        document.title = `正在前往 ${appName} - AI与Web3应用导航`;
+        document.querySelector('.redirect-title').textContent = `正在前往 ${appName}`;
+        document.querySelector('.redirect-desc').textContent = appDesc;
+        document.querySelector('.redirect-icon img').src = appIcon;
+        document.querySelector('.redirect-icon img').alt = appName;
+        document.querySelector('#skipBtn').href = appUrl;
+        
+        // 根据应用类别选择相关广告（可扩展为更复杂的逻辑）
+        if (appCategory === 'Web3应用') {
+            // 可以在这里动态修改广告内容，针对Web3用户
+            document.querySelector('.primary-ad-title').textContent = 'Web3开发技术指南 - 从区块链到DApp';
+            document.querySelector('.primary-ad-text').textContent = '探索Web3开发的前沿技术，从智能合约到去中心化应用开发，全面掌握区块链技术生态。现在购买教程，享受限时优惠！';
+        } else if (appCategory === '开发工具') {
+            // 针对开发者的广告
+            document.querySelector('.primary-ad-title').textContent = '开发者效率工具包 - 提升10倍编程效率';
+            document.querySelector('.primary-ad-text').textContent = '包含最新AI辅助编程工具、代码优化插件和自动化测试套件，帮助开发者大幅提升工作效率。现在订阅，首月仅需9.9元！';
+        }
+        
+        // 倒计时功能
+        let countdown = 5;
+        const countdownElement = document.getElementById('countdown');
+        const skipBtn = document.getElementById('skipBtn');
+        const targetUrl = skipBtn.getAttribute('href');
+        
+        const timer = setInterval(() => {
+            countdown--;
+            countdownElement.textContent = countdown;
+            
+            if (countdown <= 0) {
+                clearInterval(timer);
+                window.location.href = targetUrl;
+            }
+        }, 1000);
+        
+        // 计算广告展示时间
+        const startTime = new Date();
+        window.addEventListener('beforeunload', () => {
+            const endTime = new Date();
+            const duration = (endTime - startTime) / 1000; // 计算展示时长（秒）
+            
+            // 这里可以添加发送展示时长数据到服务器的代码
+            console.log(`广告展示时长: ${duration}秒`);
+            console.log(`应用名称: ${appName}`);
+            
+            // 可以添加数据上报逻辑，例如:
+            // fetch('/api/ad-stats', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify({
+            //         app: appName,
+            //         duration: duration,
+            //         targetUrl: targetUrl,
+            //         category: appCategory
+            //     })
+            // });
+        });
+    </script>
+</body>
+</html> 

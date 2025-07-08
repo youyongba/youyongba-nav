@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI与Web3应用导航 - 系统设置</title>
+    <!-- 引入Google字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- 引入Font Awesome图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* 结构色 */
+            --dark-color: #1a1a1a;
+            --dark-bg: #282d3e;
+            --darker-bg: #1f2333;
+            --text-color: #4d4d4d;
+            --text-light: #999999;
+            --border-color: #cccccc;
+            --bg-light: #f0f2f5;
+            --light-color: #ffffff;
+            
+            /* 品牌色 */
+            --primary-color: #e56045;
+            --secondary-color: #cc553d;
+            --light-primary: #ffb9b2;
+            
+            /* 指示器色 */
+            --info-color: #00aeef;
+            --info-light: #8bdfff;
+            --info-bg: rgba(0, 174, 239, 0.1);
+            --info-dark: #007ba9;
+            
+            --success-color: #53cfc8;
+            --success-light: #a1e5e2;
+            --success-bg: rgba(83, 207, 200, 0.1);
+            --success-dark: #609996;
+            
+            --warning-color: #f7941d;
+            --warning-light: #ffd199;
+            --warning-bg: rgba(247, 148, 29, 0.1);
+            --warning-dark: #cc7b18;
+            
+            --neutral-color: #736357;
+            
+            /* 其他 */
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* 侧边栏导航 */
+        .sidebar {
+            width: 260px;
+            background: var(--darker-bg);
+            color: white;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            overflow-y: auto;
+            transition: var(--transition);
+            z-index: 100;
+        }
+        
+        .sidebar-header {
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 0.4rem;
+        }
+        
+        .sidebar-logo i {
+            font-size: 1.8rem;
+            margin-right: 10px;
+            color: var(--primary-color);
+            flex-shrink: 0;
+        }
+        
+        .sidebar-logo h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            white-space: nowrap;
+            line-height: 1.2;
+        }
+        
+        .sidebar-subtitle {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            text-align: center;
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+        
+        .user-info {
+            flex: 1;
+            overflow: hidden;
+        }
+        
+        .user-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .user-role {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .nav-menu {
+            padding: 1rem 0;
+        }
+        
+        .nav-section {
+            margin-bottom: 1rem;
+        }
+        
+        .nav-section-title {
+            padding: 0.4rem 1.5rem;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            opacity: 0.5;
+            letter-spacing: 1px;
+        }
+        
+        .nav-item {
+            padding: 0.7rem 1.5rem;
+            display: flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+            margin: 0.15rem 0;
+        }
+        
+        .nav-item:hover, .nav-item.active {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: white;
+        }
+        
+        .nav-item.active {
+            border-left: 3px solid var(--primary-color);
+            background-color: var(--dark-bg);
+        }
+        
+        .nav-item i {
+            width: 20px;
+            text-align: center;
+            margin-right: 12px;
+            font-size: 1rem;
+        }
+        
+        .nav-item span {
+            flex: 1;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .sidebar-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            position: sticky;
+            bottom: 0;
+            background: inherit;
+        }
+        
+        .sidebar-toggle {
+            position: fixed;
+            left: 260px;
+            top: 15px;
+            background-color: white;
+            color: var(--text-color);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+            z-index: 99;
+            transition: var(--transition);
+        }
+        
+        /* 主内容区域 */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 1.5rem;
+            transition: var(--transition);
+        }
+        
+        /* 顶部栏 */
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.8rem;
+            background-color: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .page-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        /* 设置卡片样式 */
+        .settings-section {
+            background-color: white;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+        
+        .settings-header {
+            padding: 1.2rem 1.5rem;
+            background-color: var(--bg-light);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .settings-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .settings-title i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+        
+        .settings-body {
+            padding: 1.5rem;
+        }
+        
+        .form-row {
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+        }
+        
+        .form-row:last-child {
+            margin-bottom: 0;
+        }
+        
+        .form-label {
+            flex: 0 0 200px;
+            max-width: 200px;
+            padding-right: 1rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--dark-color);
+            padding-top: 0.5rem;
+        }
+        
+        .form-control {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .form-desc {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 0.3rem;
+            line-height: 1.4;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            background-color: white;
+            transition: var(--transition);
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(229, 96, 69, 0.1);
+        }
+        
+        .input-group {
+            display: flex;
+            align-items: center;
+        }
+        
+        .input-group .form-input {
+            border-radius: 8px 0 0 8px;
+        }
+        
+        .input-group-append {
+            display: flex;
+            align-items: center;
+        }
+        
+        .input-group-text {
+            padding: 0.7rem 1rem;
+            background-color: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-left: none;
+            border-radius: 0 8px 8px 0;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .select-wrapper {
+            position: relative;
+        }
+        
+        .select-wrapper::after {
+            content: "\f078";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            pointer-events: none;
+        }
+        
+        select.form-input {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            padding-right: 2.5rem;
+            cursor: pointer;
+        }
+        
+        .checkbox-group, .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 0.2rem;
+        }
+        
+        .form-check {
+            display: flex;
+            align-items: center;
+        }
+        
+        .form-check input {
+            margin-right: 0.5rem;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+        
+        .form-check label {
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        
+        .color-picker {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            padding-top: 0.2rem;
+        }
+        
+        .color-option {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            position: relative;
+            border: 1px solid var(--border-color);
+        }
+        
+        .color-option.selected::after {
+            content: "\f00c";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 0.8rem;
+            filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.5));
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+            margin-top: 0.2rem;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+        
+        input:focus + .slider {
+            box-shadow: 0 0 1px var(--primary-color);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        .settings-footer {
+            padding: 1.2rem 1.5rem;
+            border-top: 1px solid var(--bg-light);
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 0.7rem 1.2rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .btn-secondary {
+            background-color: var(--bg-light);
+            color: var(--text-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e5e5e5;
+        }
+        
+        /* 响应式布局 */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 70px;
+                transform: translateX(0);
+            }
+            
+            .sidebar.expanded {
+                width: 260px;
+            }
+            
+            .sidebar:not(.expanded) .sidebar-logo h2, 
+            .sidebar:not(.expanded) .sidebar-subtitle,
+            .sidebar:not(.expanded) .user-info,
+            .sidebar:not(.expanded) .nav-section-title,
+            .sidebar:not(.expanded) .nav-item span {
+                display: none;
+            }
+            
+            .sidebar:not(.expanded) .sidebar-header,
+            .sidebar:not(.expanded) .user-profile,
+            .sidebar:not(.expanded) .nav-item {
+                text-align: center;
+                padding: 1rem;
+            }
+            
+            .sidebar:not(.expanded) .sidebar-logo,
+            .sidebar:not(.expanded) .nav-item {
+                justify-content: center;
+            }
+            
+            .sidebar:not(.expanded) .nav-item i {
+                margin-right: 0;
+            }
+            
+            .sidebar-toggle {
+                left: 70px;
+            }
+            
+            .sidebar.expanded .sidebar-toggle {
+                left: 260px;
+            }
+            
+            .main-content {
+                margin-left: 70px;
+            }
+            
+            .sidebar.expanded + .main-content {
+                margin-left: 260px;
+            }
+            
+            .form-label {
+                flex: 0 0 150px;
+                max-width: 150px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+            }
+            
+            .form-label {
+                flex: 0 0 100%;
+                max-width: 100%;
+                margin-bottom: 0.5rem;
+                padding-top: 0;
+            }
+            
+            .form-control {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .sidebar {
+                transform: translateX(-100%);
+                z-index: 1000;
+            }
+            
+            .sidebar.expanded {
+                transform: translateX(0);
+                width: 260px;
+            }
+            
+            .sidebar-toggle {
+                left: 15px;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 0.8rem;
+            }
+            
+            .settings-header, .settings-body, .settings-footer {
+                padding: 1rem;
+            }
+        }
+        
+        /* 滚动条美化 */
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        /* 子分类导航样式 */
+        .nav-subsection {
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .nav-subsection .nav-item {
+            padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+            font-size: 0.85rem;
+            position: relative;
+        }
+        
+        .nav-subsection .nav-item:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 10px;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .nav-subsection .nav-item i {
+            font-size: 0.9rem;
+        }
+        
+        .nav-subsection .nav-item.active {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        /* 子分类在响应式下的样式调整 */
+        @media (max-width: 992px) {
+            .sidebar:not(.expanded) .nav-subsection {
+                padding-left: 0;
+            }
+            
+            .sidebar:not(.expanded) .nav-subsection .nav-item {
+                padding: 0.8rem;
+            }
+            
+            .sidebar:not(.expanded) .nav-subsection .nav-item:before {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 侧边栏导航 -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-robot"></i>
+                <h2>AI与Web3导航</h2>
+            </div>
+            <div class="sidebar-subtitle">后台管理系统</div>
+        </div>
+        
+        <div class="user-profile">
+            <div class="user-avatar">A</div>
+            <div class="user-info">
+                <div class="user-name">管理员</div>
+                <div class="user-role">超级管理员</div>
+            </div>
+        </div>
+        
+        <nav class="nav-menu">
+            <div class="nav-section">
+                <div class="nav-section-title">主要功能</div>
+                <a href="admin_dashboard.html" class="nav-item">
+                    <i class="fas fa-home"></i>
+                    <span>仪表盘</span>
+                </a>
+                <a href="apps_management.html" class="nav-item">
+                    <i class="fas fa-shapes"></i>
+                    <span>应用管理</span>
+                </a>
+                <a href="category_management.html" class="nav-item">
+                    <i class="fas fa-folder"></i>
+                    <span>分类管理</span>
+                </a>
+                
+                <!-- 子分类管理 -->
+                <div class="nav-subsection">
+                    <a href="subcategory_ai.html" class="nav-item">
+                        <i class="fas fa-robot"></i>
+                        <span>AI应用</span>
+                    </a>
+                    <a href="subcategory_web3.html" class="nav-item">
+                        <i class="fas fa-cube"></i>
+                        <span>Web3应用</span>
+                    </a>
+                    <a href="subcategory_dev.html" class="nav-item">
+                        <i class="fas fa-code"></i>
+                        <span>开发工具</span>
+                    </a>
+                    <a href="subcategory_learning.html" class="nav-item">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>学习资源</span>
+                    </a>
+                    <a href="subcategory_tools.html" class="nav-item">
+                        <i class="fas fa-tools"></i>
+                        <span>实用工具</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">系统设置</div>
+                <a href="system_settings.html" class="nav-item active">
+                    <i class="fas fa-cog"></i>
+                    <span>系统设置</span>
+                </a>
+                <a href="operation_logs.html" class="nav-item">
+                    <i class="fas fa-history"></i>
+                    <span>操作日志</span>
+                </a>
+            </div>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="admin_login.html" class="nav-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>退出登录</span>
+            </a>
+        </div>
+    </aside>
+    
+    <div class="sidebar-toggle" id="sidebarToggle">
+        <i class="fas fa-bars"></i>
+    </div>
+    
+    <!-- 主内容区域 -->
+    <main class="main-content">
+        <!-- 顶部栏 -->
+        <div class="topbar">
+            <h1 class="page-title">系统设置</h1>
+        </div>
+        
+        <!-- 基本信息设置 -->
+        <div class="settings-section">
+            <div class="settings-header">
+                <h2 class="settings-title">
+                    <i class="fas fa-info-circle"></i>
+                    基本信息设置
+                </h2>
+            </div>
+            <div class="settings-body">
+                <div class="form-row">
+                    <div class="form-label">网站名称</div>
+                    <div class="form-control">
+                        <input type="text" class="form-input" value="AI与Web3应用导航">
+                        <div class="form-desc">网站名称将显示在浏览器标签和网站顶部</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">网站副标题</div>
+                    <div class="form-control">
+                        <input type="text" class="form-input" value="发现优质AI与Web3应用">
+                        <div class="form-desc">副标题将显示在SEO描述和页脚</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">网站LOGO</div>
+                    <div class="form-control">
+                        <div class="input-group">
+                            <input type="text" class="form-input" value="/static/images/logo.png" readonly>
+                            <div class="input-group-append">
+                                <button class="btn btn-secondary">选择文件</button>
+                            </div>
+                        </div>
+                        <div class="form-desc">推荐尺寸：200px × 60px，支持PNG、JPG格式</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">网站描述</div>
+                    <div class="form-control">
+                        <textarea class="form-input" rows="3">AI与Web3应用导航是一个专注于收集和分享优质人工智能和Web3领域应用的导航平台，帮助用户快速发现和使用各类创新工具与服务。</textarea>
+                        <div class="form-desc">网站描述将用于SEO优化，建议100-150字</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">网站关键词</div>
+                    <div class="form-control">
+                        <input type="text" class="form-input" value="AI导航,Web3导航,人工智能工具,Web3应用,AI工具集合">
+                        <div class="form-desc">多个关键词请用英文逗号分隔</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">网站图标</div>
+                    <div class="form-control">
+                        <div class="input-group">
+                            <input type="text" class="form-input" value="/static/images/favicon.ico" readonly>
+                            <div class="input-group-append">
+                                <button class="btn btn-secondary">选择文件</button>
+                            </div>
+                        </div>
+                        <div class="form-desc">网站图标显示在浏览器标签，推荐尺寸：32px × 32px</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 安全设置 -->
+        <div class="settings-section">
+            <div class="settings-header">
+                <h2 class="settings-title">
+                    <i class="fas fa-shield-alt"></i>
+                    安全设置
+                </h2>
+            </div>
+            <div class="settings-body">
+                <div class="form-row">
+                    <div class="form-label">登录安全</div>
+                    <div class="form-control">
+                        <div class="checkbox-group">
+                            <div class="form-check">
+                                <input type="checkbox" id="login_captcha" checked>
+                                <label for="login_captcha">启用登录验证码</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="login_limit">
+                                <label for="login_limit">启用登录失败次数限制</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="ip_whitelist">
+                                <label for="ip_whitelist">启用IP白名单</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">密码策略</div>
+                    <div class="form-control">
+                        <div class="select-wrapper">
+                            <select class="form-input">
+                                <option value="low">低强度 (至少6位)</option>
+                                <option value="medium" selected>中强度 (至少8位，需包含字母和数字)</option>
+                                <option value="high">高强度 (至少12位，需包含大小写字母、数字和特殊字符)</option>
+                                <option value="custom">自定义</option>
+                            </select>
+                        </div>
+                        <div class="form-desc">设置管理员账号的密码强度要求</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">密码过期时间</div>
+                    <div class="form-control">
+                        <div class="select-wrapper">
+                            <select class="form-input">
+                                <option value="0">永不过期</option>
+                                <option value="30">30天</option>
+                                <option value="60">60天</option>
+                                <option value="90" selected>90天</option>
+                                <option value="180">180天</option>
+                            </select>
+                        </div>
+                        <div class="form-desc">设置密码过期后需要重新设置密码的时间</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">会话超时</div>
+                    <div class="form-control">
+                        <div class="select-wrapper">
+                            <select class="form-input">
+                                <option value="15">15分钟</option>
+                                <option value="30" selected>30分钟</option>
+                                <option value="60">1小时</option>
+                                <option value="120">2小时</option>
+                                <option value="240">4小时</option>
+                                <option value="480">8小时</option>
+                            </select>
+                        </div>
+                        <div class="form-desc">设置无操作后自动退出登录的时间</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 界面设置 -->
+        <div class="settings-section">
+            <div class="settings-header">
+                <h2 class="settings-title">
+                    <i class="fas fa-palette"></i>
+                    界面设置
+                </h2>
+            </div>
+            <div class="settings-body">
+                <div class="form-row">
+                    <div class="form-label">主题色</div>
+                    <div class="form-control">
+                        <div class="color-picker">
+                            <div class="color-option selected" style="background-color: #e56045;"></div>
+                            <div class="color-option" style="background-color: #3498db;"></div>
+                            <div class="color-option" style="background-color: #2ecc71;"></div>
+                            <div class="color-option" style="background-color: #9b59b6;"></div>
+                            <div class="color-option" style="background-color: #f1c40f;"></div>
+                            <div class="color-option" style="background-color: #1abc9c;"></div>
+                            <div class="color-option" style="background-color: #34495e;"></div>
+                            <div class="color-option" style="background-color: #e74c3c;"></div>
+                        </div>
+                        <div class="form-desc">选择系统的主题色，将应用于按钮、链接等元素</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">布局方式</div>
+                    <div class="form-control">
+                        <div class="radio-group">
+                            <div class="form-check">
+                                <input type="radio" name="layout" id="layout_sidebar" checked>
+                                <label for="layout_sidebar">侧边栏模式</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="radio" name="layout" id="layout_topbar">
+                                <label for="layout_topbar">顶部导航模式</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">导航图标</div>
+                    <div class="form-control">
+                        <div class="checkbox-group">
+                            <div class="form-check">
+                                <input type="checkbox" id="show_icon" checked>
+                                <label for="show_icon">显示导航图标</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">表格展示方式</div>
+                    <div class="form-control">
+                        <div class="select-wrapper">
+                            <select class="form-input">
+                                <option value="compact">紧凑模式</option>
+                                <option value="normal" selected>标准模式</option>
+                                <option value="loose">宽松模式</option>
+                            </select>
+                        </div>
+                        <div class="form-desc">设置表格行高和内容展示的紧凑程度</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">卡片圆角</div>
+                    <div class="form-control">
+                        <div class="select-wrapper">
+                            <select class="form-input">
+                                <option value="small">小圆角 (4px)</option>
+                                <option value="medium" selected>中等圆角 (8px)</option>
+                                <option value="large">大圆角 (12px)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">动画效果</div>
+                    <div class="form-control">
+                        <div class="checkbox-group">
+                            <div class="form-check">
+                                <input type="checkbox" id="enable_animation" checked>
+                                <label for="enable_animation">启用界面动画效果</label>
+                            </div>
+                        </div>
+                        <div class="form-desc">禁用可提高在低性能设备上的运行效率</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 系统参数 -->
+        <div class="settings-section">
+            <div class="settings-header">
+                <h2 class="settings-title">
+                    <i class="fas fa-sliders-h"></i>
+                    系统参数
+                </h2>
+            </div>
+            <div class="settings-body">
+                <div class="form-row">
+                    <div class="form-label">每页显示记录数</div>
+                    <div class="form-control">
+                        <div class="select-wrapper">
+                            <select class="form-input">
+                                <option value="10">10条/页</option>
+                                <option value="15" selected>15条/页</option>
+                                <option value="20">20条/页</option>
+                                <option value="30">30条/页</option>
+                                <option value="50">50条/页</option>
+                            </select>
+                        </div>
+                        <div class="form-desc">设置列表页面默认的分页大小</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">数据缓存时间</div>
+                    <div class="form-control">
+                        <div class="select-wrapper">
+                            <select class="form-input">
+                                <option value="0">不缓存</option>
+                                <option value="300">5分钟</option>
+                                <option value="600" selected>10分钟</option>
+                                <option value="1800">30分钟</option>
+                                <option value="3600">1小时</option>
+                            </select>
+                        </div>
+                        <div class="form-desc">设置系统数据缓存过期时间，可提高页面加载速度</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">系统维护模式</div>
+                    <div class="form-control">
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                        </label>
+                        <div class="form-desc">开启后前台将显示维护页面，仅管理员可访问</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">开启API接口</div>
+                    <div class="form-control">
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                        <div class="form-desc">开启后允许通过API接口访问系统数据</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">开启调试模式</div>
+                    <div class="form-control">
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                        </label>
+                        <div class="form-desc">开启后将显示更详细的错误信息，仅用于开发环境</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">操作日志保留</div>
+                    <div class="form-control">
+                        <div class="select-wrapper">
+                            <select class="form-input">
+                                <option value="7">7天</option>
+                                <option value="15">15天</option>
+                                <option value="30" selected>30天</option>
+                                <option value="60">60天</option>
+                                <option value="90">90天</option>
+                                <option value="180">180天</option>
+                                <option value="365">365天</option>
+                            </select>
+                        </div>
+                        <div class="form-desc">设置系统操作日志的保留时间</div>
+                    </div>
+                </div>
+            </div>
+            <div class="settings-footer">
+                <button class="btn btn-secondary">重置</button>
+                <button class="btn btn-primary">保存设置</button>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        // 侧边栏切换
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('expanded');
+        });
+        
+        // 移动端侧边栏适配
+        function handleResize() {
+            const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            
+            if (window.innerWidth <= 992) {
+                sidebar.classList.add('expanded');
+                sidebarToggle.style.display = 'flex';
+            } else {
+                sidebar.classList.remove('expanded');
+                sidebarToggle.style.display = 'none';
+            }
+            
+            if (window.innerWidth <= 576) {
+                sidebar.classList.remove('expanded');
+            }
+        }
+        
+        // 颜色选择器
+        const colorOptions = document.querySelectorAll('.color-option');
+        colorOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                colorOptions.forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+        
+        // 初始化
+        window.addEventListener('load', handleResize);
+        window.addEventListener('resize', handleResize);
+    </script>
+</body>
+</html> 

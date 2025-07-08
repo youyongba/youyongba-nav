@@ -1,0 +1,2326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI与Web3应用导航</title>
+    <!-- 引入Google字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- 引入Font Awesome图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 引入AOS动画库 -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            /* 结构色 */
+            --dark-color: #1a1a1a;
+            --text-color: #4d4d4d;
+            --text-light: #999999;
+            --border-color: #cccccc;
+            --bg-light: #e5e5e5;
+            --light-color: #f2f2f2;
+            
+            /* 品牌色 */
+            --primary-color: #e56045;
+            --secondary-color: #cc553d;
+            --light-primary: #ffb9b2;
+            
+            /* 指示器色 */
+            --info-color: #00aeef;
+            --info-light: #8bdfff;
+            --info-dark: #007ba9;
+            
+            --success-color: #53cfc8;
+            --success-light: #a1e5e2;
+            --success-dark: #609996;
+            
+            --warning-color: #f7941d;
+            --warning-light: #ffd199;
+            --warning-dark: #cc7b18;
+            
+            --neutral-color: #736357;
+            
+            /* 其他 */
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --shadow-lg: 0 12px 24px rgba(0,0,0,0.15);
+            --transition: all 0.3s ease;
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 顶部导航与搜索 */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(rgba(255, 255, 255, 0.1), transparent 70%);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            margin-right: 10px;
+            height: 2rem;
+            width: auto;
+        }
+        
+        .search-box {
+            position: relative;
+            width: 350px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px 45px 12px 45px;
+            border-radius: 50px;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: var(--transition);
+        }
+
+        .search-box input:focus {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        
+        .search-box .search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            pointer-events: none;
+        }
+
+        .search-box .clear-icon {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            cursor: pointer;
+            opacity: 0;
+            transition: var(--transition);
+            background: none;
+            border: none;
+            font-size: 1rem;
+            padding: 4px;
+            border-radius: 50%;
+        }
+
+        .search-box .clear-icon:hover {
+            color: var(--primary-color);
+            background-color: rgba(229, 96, 69, 0.1);
+        }
+
+        .search-box.has-content .clear-icon {
+            opacity: 1;
+        }
+        
+        /* 主导航栏 */
+        nav {
+            background-color: white;
+            padding: 0;
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            padding: 1.2rem 1.5rem;
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+        }
+
+        .nav-links i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+            background-color: rgba(229, 96, 69, 0.05);
+            border-bottom: 3px solid var(--primary-color);
+        }
+        
+        .nav-links a.active {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+        }
+        
+        /* 页面主体 */
+        main {
+            padding: 3rem 0;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            padding-bottom: 0.8rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 3px;
+        }
+        
+        /* 分类标签 */
+        .category-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            background-color: white;
+            border-radius: var(--radius-sm);
+            padding: 5px;
+            box-shadow: var(--shadow-sm);
+            overflow-x: auto;
+        }
+        
+        .category-tab {
+            padding: 0.8rem 1.2rem;
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            margin: 5px;
+            transition: var(--transition);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+
+        .category-tab i {
+            margin-right: 8px;
+        }
+        
+        .category-tab.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            box-shadow: 0 4px 10px rgba(229, 96, 69, 0.3);
+        }
+        
+        .category-tab:hover:not(.active) {
+            background-color: rgba(229, 96, 69, 0.08);
+        }
+        
+        /* 应用卡片网格 */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.8rem;
+            margin-bottom: 3rem;
+        }
+        
+        .app-card {
+            background-color: white;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.05);
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .app-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .app-img {
+            position: relative;
+            height: 160px;
+            overflow: hidden;
+            background-color: #f0f0f0;
+        }
+
+        .app-img .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255,255,255,0.7);
+            z-index: 2;
+        }
+
+        .app-img .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(229, 96, 69, 0.2);
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .app-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            opacity: 0; /* 初始不显示 */
+            transition: opacity 0.3s ease, transform 0.5s ease;
+        }
+
+        .app-img img.loaded {
+            opacity: 1;
+        }
+        
+        .app-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(26, 26, 26, 0.7);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .app-badge.ai {
+            background: rgba(0, 174, 239, 0.8);
+        }
+
+        .app-badge.web3 {
+            background: rgba(247, 148, 29, 0.8);
+        }
+
+        .app-badge.tool {
+            background: rgba(83, 207, 200, 0.8);
+        }
+
+        .app-badge.design {
+            background: rgba(153, 153, 153, 0.8);
+        }
+
+        .app-badge.microsoft {
+            background: rgba(0, 123, 169, 0.8);
+        }
+
+        .app-badge.communication {
+            background: rgba(96, 153, 150, 0.8);
+        }
+
+        .app-badge.api {
+            background: rgba(204, 85, 61, 0.8);
+        }
+
+        .app-badge.database {
+            background: rgba(116, 99, 87, 0.8);
+        }
+        
+        .app-info {
+            padding: 20px;
+        }
+        
+        .app-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--dark-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .app-name i.verified {
+            color: var(--info-color);
+            font-size: 1rem;
+        }
+        
+        .app-desc {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            height: 4.5rem;
+            line-height: 1.5;
+        }
+
+        .app-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .app-meta span {
+            display: flex;
+            align-items: center;
+        }
+
+        .app-meta i {
+            margin-right: 5px;
+        }
+        
+        .app-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .app-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 15px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-decoration: none;
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition);
+            flex: 1;
+            text-align: center;
+            box-shadow: 0 3px 8px rgba(229, 96, 69, 0.25);
+        }
+
+        .app-link i {
+            margin-left: 6px;
+        }
+        
+        .app-link:hover {
+            box-shadow: 0 5px 15px rgba(229, 96, 69, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .app-save {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(229, 96, 69, 0.1);
+            color: var(--primary-color);
+            margin-left: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .app-save:hover {
+            background-color: rgba(229, 96, 69, 0.2);
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: var(--dark-color);
+            color: #ccc;
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 240px;
+            margin-bottom: 2rem;
+            padding-right: 2rem;
+        }
+        
+        .footer-column h3 {
+            color: white;
+            margin-bottom: 1.2rem;
+            font-size: 1.2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background-color: var(--secondary-color);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-column a {
+            color: #ccc;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-column a i {
+            margin-right: 8px;
+        }
+        
+        .footer-column a:hover {
+            color: white;
+            transform: translateX(3px);
+        }
+
+        .social-links {
+            display: flex;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            margin-right: 10px;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .social-link.wechat:hover {
+            background: #e56045; /* 网站主色调 */
+        }
+
+        .social-link.video-channel:hover {
+            background: #e56045; /* 网站主色调 */
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .logo {
+                margin-bottom: 20px;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .nav-links {
+                overflow-x: auto;
+                justify-content: flex-start;
+                padding: 0 10px;
+            }
+
+            .nav-links a {
+                padding: 1rem 1.2rem;
+                white-space: nowrap;
+            }
+
+            .app-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            }
+
+            .category-tabs {
+                overflow-x: auto;
+                justify-content: flex-start;
+                padding: 5px 10px;
+            }
+
+            .category-tab {
+                white-space: nowrap;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .app-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-column {
+                min-width: 100%;
+                padding-right: 0;
+            }
+        }
+
+        /* 搜索无结果提示 */
+        .no-results {
+            display: none;
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-light);
+        }
+
+        .no-results.show {
+            display: block;
+        }
+
+        .no-results i {
+            font-size: 4rem;
+            color: var(--border-color);
+            margin-bottom: 1rem;
+        }
+
+        .no-results h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .no-results p {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* 滚动条美化 */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #aaa;
+        }
+
+        /* 订阅表单 */
+        .footer-column form {
+            margin-top: 15px;
+        }
+
+        .footer-column form div {
+            display: flex;
+        }
+
+        .footer-column form input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+        }
+
+        .footer-column form button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .footer-column form button:hover {
+            background: var(--secondary-color);
+        }
+
+        /* 微信二维码弹窗 */
+        .wechat-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .wechat-modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+        }
+
+        .wechat-modal-content {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            text-align: center;
+            max-width: 300px;
+            width: 90%;
+            position: relative;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .wechat-modal.show .wechat-modal-content {
+            transform: scale(1);
+        }
+
+        .wechat-modal-content h3 {
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .wechat-modal-content .qr-code {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 1rem;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .wechat-modal-content .qr-code img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .wechat-modal-content p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .wechat-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: var(--transition);
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .wechat-close:hover {
+            color: var(--primary-color);
+            background-color: rgba(229, 96, 69, 0.1);
+        }
+
+        /* 视频号二维码弹窗 */
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .video-modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+        }
+
+        .video-modal-content {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            text-align: center;
+            max-width: 300px;
+            width: 90%;
+            position: relative;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .video-modal.show .video-modal-content {
+            transform: scale(1);
+        }
+
+        .video-modal-content h3 {
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .video-modal-content .qr-code {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 1rem;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .video-modal-content .qr-code img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-modal-content p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .video-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: var(--transition);
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .video-close:hover {
+            color: var(--primary-color);
+            background-color: rgba(229, 96, 69, 0.1);
+        }
+
+        /* 微信弹窗响应式 */
+        @media (max-width: 576px) {
+            .wechat-modal-content {
+                margin: 20px;
+                padding: 1.5rem;
+            }
+
+            .wechat-modal-content .qr-code {
+                width: 180px;
+                height: 180px;
+            }
+
+            .wechat-modal-content h3 {
+                font-size: 1.2rem;
+            }
+
+            .video-modal-content {
+                margin: 20px;
+                padding: 1.5rem;
+            }
+
+            .video-modal-content .qr-code {
+                width: 180px;
+                height: 180px;
+            }
+
+            .video-modal-content h3 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-robot"></i>
+                <span>AI与Web3导航</span>
+            </div>
+            <div class="search-box">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" placeholder="搜索AI与Web3应用...">
+                <button class="clear-icon"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container">
+            <ul class="nav-links">
+                <li><a href="#ai" class="active"><i class="fas fa-brain"></i>AI应用</a></li>
+                <li><a href="#web3"><i class="fas fa-link"></i>Web3应用</a></li>
+                <li><a href="#tools"><i class="fas fa-tools"></i>开发工具</a></li>
+                <li><a href="#learn"><i class="fas fa-graduation-cap"></i>学习资源</a></li>
+                <li><a href="#utilities"><i class="fas fa-wrench"></i>实用工具</a></li>
+                <li><a href="#about"><i class="fas fa-info-circle"></i>关于我们</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <main class="container">
+        <section id="ai" data-aos="fade-up">
+            <h2 class="section-title">AI应用</h2>
+            
+            <div class="category-tabs">
+                <div class="category-tab active"><i class="fas fa-th"></i>全部</div>
+                <div class="category-tab"><i class="fas fa-font"></i>文本生成</div>
+                <div class="category-tab"><i class="fas fa-image"></i>图像生成</div>
+                <div class="category-tab"><i class="fas fa-music"></i>音频处理</div>
+                <div class="category-tab"><i class="fas fa-video"></i>视频制作</div>
+                <div class="category-tab"><i class="fas fa-robot"></i>助手</div>
+            </div>
+            
+            <div class="app-grid">
+                <div class="app-card" data-aos="fade-up" data-category="文本生成 助手">
+                    <div class="app-img">
+                        <img src="data:image/svg+xml;charset=UTF-8,%3Csvg width='300' height='160' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='300' height='160' fill='%23e56045'/%3E%3Ctext x='150' y='80' font-family='Arial' font-size='24' font-weight='bold' text-anchor='middle' fill='white'%3EChatGPT%3C/text%3E%3Ctext x='150' y='115' font-family='Arial' font-size='16' text-anchor='middle' fill='white'%3EOpenAI%3C/text%3E%3C/svg%3E" alt="ChatGPT">
+                        <div class="app-badge ai">热门</div>
+                    </div>
+                    <div class="app-info">
+                        <h3 class="app-name">
+                            ChatGPT
+                            <i class="fas fa-check-circle verified" title="官方认证"></i>
+                        </h3>
+                        <p class="app-desc">OpenAI开发的智能对话系统，能够理解和生成人类语言，提供交互式对话体验，已成为AI领域的标志性产品。</p>
+                        <div class="app-meta">
+                            <span><i class="fas fa-star"></i>4.9</span>
+                            <span><i class="fas fa-users"></i>1亿+用户</span>
+                        </div>
+                        <div class="app-actions">
+                            <a href="https://chat.openai.com" class="app-link" target="_blank">访问应用<i class="fas fa-external-link-alt"></i></a>
+                            <div class="app-save"><i class="far fa-bookmark"></i></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="app-card" data-aos="fade-up" data-aos-delay="100" data-category="图像生成">
+                    <div class="app-img">
+                        <img src="data:image/svg+xml;charset=UTF-8,%3Csvg width='300' height='160' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%' y1='0%' x2='100%' y2='0%'%3E%3Cstop offset='0%' style='stop-color:%23e56045;stop-opacity:1' /%3E%3Cstop offset='100%' style='stop-color:%23cc553d;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='300' height='160' fill='url(%23grad)'/%3E%3Ctext x='150' y='80' font-family='Arial' font-size='24' font-weight='bold' text-anchor='middle' fill='white'%3EMidjourney%3C/text%3E%3Ctext x='150' y='115' font-family='Arial' font-size='16' text-anchor='middle' fill='white'%3EAI图像生成%3C/text%3E%3C/svg%3E" alt="Midjourney">
+                        <div class="app-badge ai">创意</div>
+                    </div>
+                    <div class="app-info">
+                        <h3 class="app-name">
+                            Midjourney
+                            <i class="fas fa-check-circle verified" title="官方认证"></i>
+                        </h3>
+                        <p class="app-desc">强大的AI图像生成工具，可通过文字描述创建出令人惊叹的艺术作品，拥有独特的艺术风格和卓越的细节表现。</p>
+                        <div class="app-meta">
+                            <span><i class="fas fa-star"></i>4.8</span>
+                            <span><i class="fas fa-users"></i>2000万+用户</span>
+                        </div>
+                        <div class="app-actions">
+                            <a href="https://www.midjourney.com" class="app-link" target="_blank">访问应用<i class="fas fa-external-link-alt"></i></a>
+                            <div class="app-save"><i class="far fa-bookmark"></i></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="app-card" data-aos="fade-up" data-aos-delay="200" data-category="图像生成">
+                    <div class="app-img">
+                        <img src="data:image/svg+xml;charset=UTF-8,%3Csvg width='300' height='160' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='300' height='160' fill='%231a1a1a'/%3E%3Ctext x='150' y='80' font-family='Arial' font-size='24' font-weight='bold' text-anchor='middle' fill='white'%3EDALL-E 3%3C/text%3E%3Ctext x='150' y='115' font-family='Arial' font-size='16' text-anchor='middle' fill='white'%3EOpenAI%3C/text%3E%3C/svg%3E" alt="DALL-E">
+                        <div class="app-badge web3">OpenAI</div>
+                    </div>
+                    <div class="app-info">
+                        <h3 class="app-name">
+                            DALL-E 3
+                            <i class="fas fa-check-circle verified" title="官方认证"></i>
+                        </h3>
+                        <p class="app-desc">OpenAI的图像生成模型，能根据文本描述生成细节丰富的图像，最新版本在艺术表现力和理解复杂指令方面有显著提升。</p>
+                        <div class="app-meta">
+                            <span><i class="fas fa-star"></i>4.7</span>
+                            <span><i class="fas fa-users"></i>1500万+用户</span>
+                        </div>
+                        <div class="app-actions">
+                            <a href="https://openai.com/dall-e-3" class="app-link" target="_blank">访问应用<i class="fas fa-external-link-alt"></i></a>
+                            <div class="app-save"><i class="far fa-bookmark"></i></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="app-card" data-aos="fade-up" data-aos-delay="300" data-category="文本生成 助手">
+                    <div class="app-img">
+                        <img src="data:image/svg+xml;charset=UTF-8,%3Csvg width='300' height='160' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='300' height='160' fill='%231a1a1a'/%3E%3Ctext x='150' y='80' font-family='Arial' font-size='24' font-weight='bold' text-anchor='middle' fill='white'%3ENotion AI%3C/text%3E%3Ctext x='150' y='115' font-family='Arial' font-size='16' text-anchor='middle' fill='white'%3E智能协作平台%3C/text%3E%3C/svg%3E" alt="Notion AI">
+                        <div class="app-badge tool">生产力</div>
+                    </div>
+                    <div class="app-info">
+                        <h3 class="app-name">
+                            Notion AI
+                            <i class="fas fa-check-circle verified" title="官方认证"></i>
+                        </h3>
+                        <p class="app-desc">集成在Notion中的AI助手，可以帮助撰写、编辑和总结内容，提高工作效率，支持多种语言和格式。</p>
+                        <div class="app-meta">
+                            <span><i class="fas fa-star"></i>4.6</span>
+                            <span><i class="fas fa-users"></i>800万+用户</span>
+                        </div>
+                        <div class="app-actions">
+                            <a href="https://www.notion.so/product/ai" class="app-link" target="_blank">访问应用<i class="fas fa-external-link-alt"></i></a>
+                            <div class="app-save"><i class="far fa-bookmark"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 无搜索结果提示 -->
+            <div class="no-results" id="no-results-ai">
+                <i class="fas fa-search"></i>
+                <h3>没有找到匹配的AI应用</h3>
+                <p>尝试使用不同的关键词，或者浏览所有应用</p>
+            </div>
+        </section>
+        
+        <section id="web3" data-aos="fade-up">
+            <h2 class="section-title">Web3应用</h2>
+            
+            <div class="category-tabs">
+                <div class="category-tab active"><i class="fas fa-th"></i>全部</div>
+                <div class="category-tab"><i class="fas fa-exchange-alt"></i>DeFi</div>
+                <div class="category-tab"><i class="fas fa-image"></i>NFT</div>
+                <div class="category-tab"><i class="fas fa-users"></i>DAO</div>
+                <div class="category-tab"><i class="fas fa-vr-cardboard"></i>元宇宙</div>
+                <div class="category-tab"><i class="fas fa-gamepad"></i>区块链游戏</div>
+            </div>
+            
+            <div class="app-grid">
+                <div class="app-card" data-aos="fade-up" data-category="DeFi">
+                    <div class="app-img">
+                        <img src="data:image/svg+xml;charset=UTF-8,%3Csvg width='300' height='160' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='300' height='160' fill='%23f7941d'/%3E%3Ctext x='150' y='80' font-family='Arial' font-size='24' font-weight='bold' text-anchor='middle' fill='white'%3EUniswap%3C/text%3E%3Ctext x='150' y='115' font-family='Arial' font-size='16' text-anchor='middle' fill='white'%3E去中心化交易所%3C/text%3E%3C/svg%3E" alt="Uniswap">
+                        <div class="app-badge web3">DeFi</div>
+                    </div>
+                    <div class="app-info">
+                        <h3 class="app-name">
+                            Uniswap
+                            <i class="fas fa-check-circle verified" title="官方认证"></i>
+                        </h3>
+                        <p class="app-desc">去中心化交易协议，允许用户在以太坊区块链上进行代币交换，是目前最大的去中心化交易所之一。</p>
+                        <div class="app-meta">
+                            <span><i class="fas fa-chart-line"></i>$10亿+日交易量</span>
+                            <span><i class="fas fa-wallet"></i>500万+用户</span>
+                        </div>
+                        <div class="app-actions">
+                            <a href="https://app.uniswap.org" class="app-link" target="_blank">访问应用<i class="fas fa-external-link-alt"></i></a>
+                            <div class="app-save"><i class="far fa-bookmark"></i></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="app-card" data-aos="fade-up" data-aos-delay="100" data-category="NFT">
+                    <div class="app-img">
+                        <img src="data:image/svg+xml;charset=UTF-8,%3Csvg width='300' height='160' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='300' height='160' fill='%2300aeef'/%3E%3Ctext x='150' y='80' font-family='Arial' font-size='24' font-weight='bold' text-anchor='middle' fill='white'%3EOpenSea%3C/text%3E%3Ctext x='150' y='115' font-family='Arial' font-size='16' text-anchor='middle' fill='white'%3ENFT交易市场%3C/text%3E%3C/svg%3E" alt="OpenSea">
+                        <div class="app-badge web3">NFT</div>
+                    </div>
+                    <div class="app-info">
+                        <h3 class="app-name">
+                            OpenSea
+                            <i class="fas fa-check-circle verified" title="官方认证"></i>
+                        </h3>
+                        <p class="app-desc">全球最大的NFT交易市场，提供各类数字收藏品的买卖服务，支持多种区块链网络。</p>
+                        <div class="app-meta">
+                            <span><i class="fas fa-paint-brush"></i>8000万+NFT</span>
+                            <span><i class="fas fa-users"></i>200万+活跃用户</span>
+                        </div>
+                        <div class="app-actions">
+                            <a href="https://opensea.io" class="app-link" target="_blank">访问应用<i class="fas fa-external-link-alt"></i></a>
+                            <div class="app-save"><i class="far fa-bookmark"></i></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="app-card" data-aos="fade-up" data-aos-delay="200" data-category="DeFi">
+                    <div class="app-img">
+                        <img src="data:image/svg+xml;charset=UTF-8,%3Csvg width='300' height='160' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='300' height='160' fill='%23cc7b18'/%3E%3Ctext x='150' y='80' font-family='Arial' font-size='24' font-weight='bold' text-anchor='middle' fill='white'%3EAave%3C/text%3E%3Ctext x='150' y='115' font-family='Arial' font-size='16' text-anchor='middle' fill='white'%3E去中心化借贷平台%3C/text%3E%3C/svg%3E" alt="Aave">
+                        <div class="app-badge web3">借贷</div>
+                    </div>
+                    <div class="app-info">
+                        <h3 class="app-name">
+                            Aave
+                            <i class="fas fa-check-circle verified" title="官方认证"></i>
+                        </h3>
+                        <p class="app-desc">去中心化借贷协议，允许用户存入资产获取利息或借入资产，支持多种加密货币和链上流动性管理。</p>
+                        <div class="app-meta">
+                            <span><i class="fas fa-coins"></i>$60亿+锁仓量</span>
+                            <span><i class="fas fa-percentage"></i>动态利率</span>
+                        </div>
+                        <div class="app-actions">
+                            <a href="https://aave.com" class="app-link" target="_blank">访问应用<i class="fas fa-external-link-alt"></i></a>
+                            <div class="app-save"><i class="far fa-bookmark"></i></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="app-card" data-aos="fade-up" data-aos-delay="300" data-category="元宇宙">
+                    <div class="app-img">
+                        <img src="data:image/svg+xml;charset=UTF-8,%3Csvg width='300' height='160' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='300' height='160' fill='%23ffd199'/%3E%3Ctext x='150' y='80' font-family='Arial' font-size='24' font-weight='bold' text-anchor='middle' fill='%234d4d4d'%3EDecentraland%3C/text%3E%3Ctext x='150' y='115' font-family='Arial' font-size='16' text-anchor='middle' fill='%234d4d4d'%3E区块链虚拟世界%3C/text%3E%3C/svg%3E" alt="Decentraland">
+                        <div class="app-badge web3">元宇宙</div>
+                    </div>
+                    <div class="app-info">
+                        <h3 class="app-name">
+                            Decentraland
+                            <i class="fas fa-check-circle verified" title="官方认证"></i>
+                        </h3>
+                        <p class="app-desc">基于区块链的虚拟现实平台，用户可购买土地、建造和探索3D世界，举办虚拟活动和社交互动。</p>
+                        <div class="app-meta">
+                            <span><i class="fas fa-map-marker-alt"></i>90,601块土地</span>
+                            <span><i class="fas fa-globe"></i>百万+访客</span>
+                        </div>
+                        <div class="app-actions">
+                            <a href="https://decentraland.org" class="app-link" target="_blank">访问应用<i class="fas fa-external-link-alt"></i></a>
+                            <div class="app-save"><i class="far fa-bookmark"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 无搜索结果提示 -->
+            <div class="no-results" id="no-results-web3">
+                <i class="fas fa-search"></i>
+                <h3>没有找到匹配的Web3应用</h3>
+                <p>尝试使用不同的关键词，或者浏览所有应用</p>
+            </div>
+        </section>
+        
+        <section id="tools" data-aos="fade-up">
+            <h2 class="section-title">开发工具</h2>
+            
+            <div class="category-tabs">
+                <div class="category-tab active"><i class="fas fa-th"></i>全部</div>
+                <div class="category-tab"><i class="fas fa-brain"></i>AI开发</div>
+                <div class="category-tab"><i class="fas fa-code"></i>Web3开发</div>
+                <div class="category-tab"><i class="fas fa-database"></i>数据分析</div>
+            </div>
+            
+            <div class="app-grid">
+                <div class="app-card" data-aos="fade-up" data-category="AI开发">
+                    <div class="app-img">
+                        <img src="data:image/svg+xml;charset=UTF-8,%3Csvg width='300' height='160' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='300' height='160' fill='%23ffbd59'/%3E%3Ctext x='150' y='80' font-family='Arial' font-size='24' font-weight='bold' text-anchor='middle' fill='black'%3EHugging Face%3C/text%3E%3Ctext x='150' y='115' font-family='Arial' font-size='16' text-anchor='middle' fill='black'%3EAI模型平台%3C/text%3E%3C/svg%3E" alt="Hugging Face">
+                        <div class="app-badge ai">AI开发</div>
+                    </div>
+                    <div class="app-info">
+                        <h3 class="app-name">
+                            Hugging Face
+                            <i class="fas fa-check-circle verified" title="官方认证"></i>
+                        </h3>
+                        <p class="app-desc">提供各种开源AI模型和工具的平台，方便开发者构建AI应用，被誉为"AI界的GitHub"。</p>
+                        <div class="app-meta">
+                            <span><i class="fas fa-code-branch"></i>100,000+模型</span>
+                            <span><i class="fas fa-users"></i>100万+开发者</span>
+                        </div>
+                        <div class="app-actions">
+                            <a href="https://huggingface.co" class="app-link" target="_blank">访问应用<i class="fas fa-external-link-alt"></i></a>
+                            <div class="app-save"><i class="far fa-bookmark"></i></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="app-card" data-aos="fade-up" data-aos-delay="100" data-category="Web3开发">
+                    <div class="app-img">
+                        <img src="data:image/svg+xml;charset=UTF-8,%3Csvg width='300' height='160' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='300' height='160' fill='%236e7681'/%3E%3Ctext x='150' y='80' font-family='Arial' font-size='24' font-weight='bold' text-anchor='middle' fill='white'%3ERemix IDE%3C/text%3E%3Ctext x='150' y='115' font-family='Arial' font-size='16' text-anchor='middle' fill='white'%3E智能合约开发环境%3C/text%3E%3C/svg%3E" alt="Remix IDE">
+                        <div class="app-badge web3">Web3开发</div>
+                    </div>
+                    <div class="app-info">
+                        <h3 class="app-name">
+                            Remix IDE
+                            <i class="fas fa-check-circle verified" title="官方认证"></i>
+                        </h3>
+                        <p class="app-desc">以太坊智能合约开发IDE，支持Solidity编程和测试，提供友好的Web界面和即时编译反馈。</p>
+                        <div class="app-meta">
+                            <span><i class="fas fa-code"></i>Solidity支持</span>
+                            <span><i class="fas fa-plug"></i>多插件扩展</span>
+                        </div>
+                        <div class="app-actions">
+                            <a href="https://remix.ethereum.org" class="app-link" target="_blank">访问应用<i class="fas fa-external-link-alt"></i></a>
+                            <div class="app-save"><i class="far fa-bookmark"></i></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="app-card" data-aos="fade-up" data-aos-delay="200" data-category="AI开发">
+                    <div class="app-img">
+                        <img src="data:image/svg+xml;charset=UTF-8,%3Csvg width='300' height='160' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='300' height='160' fill='%23ff6f00'/%3E%3Ctext x='150' y='80' font-family='Arial' font-size='24' font-weight='bold' text-anchor='middle' fill='white'%3ETensorFlow%3C/text%3E%3Ctext x='150' y='115' font-family='Arial' font-size='16' text-anchor='middle' fill='white'%3E机器学习框架%3C/text%3E%3C/svg%3E" alt="TensorFlow">
+                        <div class="app-badge ai">AI开发</div>
+                    </div>
+                    <div class="app-info">
+                        <h3 class="app-name">
+                            TensorFlow
+                            <i class="fas fa-check-circle verified" title="官方认证"></i>
+                        </h3>
+                        <p class="app-desc">Google开发的开源机器学习框架，提供完整的工具、库和社区资源，支持从研究到生产的全流程部署。</p>
+                        <div class="app-meta">
+                            <span><i class="fas fa-cogs"></i>高效计算</span>
+                            <span><i class="fas fa-mobile-alt"></i>多平台支持</span>
+                        </div>
+                        <div class="app-actions">
+                            <a href="https://www.tensorflow.org" class="app-link" target="_blank">访问应用<i class="fas fa-external-link-alt"></i></a>
+                            <div class="app-save"><i class="far fa-bookmark"></i></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="app-card" data-aos="fade-up" data-aos-delay="300" data-category="Web3开发">
+                    <div class="app-img">
+                        <img src="data:image/svg+xml;charset=UTF-8,%3Csvg width='300' height='160' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='300' height='160' fill='%23f0b90b'/%3E%3Ctext x='150' y='80' font-family='Arial' font-size='24' font-weight='bold' text-anchor='middle' fill='black'%3EHardhat%3C/text%3E%3Ctext x='150' y='115' font-family='Arial' font-size='16' text-anchor='middle' fill='black'%3E以太坊开发环境%3C/text%3E%3C/svg%3E" alt="Hardhat">
+                        <div class="app-badge web3">Web3开发</div>
+                    </div>
+                    <div class="app-info">
+                        <h3 class="app-name">
+                            Hardhat
+                            <i class="fas fa-check-circle verified" title="官方认证"></i>
+                        </h3>
+                        <p class="app-desc">以太坊开发环境，专为专业开发者设计，提供完整的测试、编译和部署工具链，支持TypeScript。</p>
+                        <div class="app-meta">
+                            <span><i class="fas fa-terminal"></i>强大CLI</span>
+                            <span><i class="fas fa-network-wired"></i>本地网络</span>
+                        </div>
+                        <div class="app-actions">
+                            <a href="https://hardhat.org" class="app-link" target="_blank">访问应用<i class="fas fa-external-link-alt"></i></a>
+                            <div class="app-save"><i class="far fa-bookmark"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 无搜索结果提示 -->
+            <div class="no-results" id="no-results-tools">
+                <i class="fas fa-search"></i>
+                <h3>没有找到匹配的开发工具</h3>
+                <p>尝试使用不同的关键词，或者浏览所有工具</p>
+            </div>
+        </section>
+        
+        <section id="learn" data-aos="fade-up">
+            <h2 class="section-title">学习资源</h2>
+            
+            <div class="category-tabs">
+                <div class="category-tab active"><i class="fas fa-th"></i>全部</div>
+                <div class="category-tab"><i class="fas fa-film"></i>视频教程</div>
+                <div class="category-tab"><i class="fas fa-book"></i>在线课程</div>
+                <div class="category-tab"><i class="fas fa-newspaper"></i>技术博客</div>
+            </div>
+            
+            <div class="app-grid">
+                <div class="app-card" data-aos="fade-up" data-category="在线课程">
+                    <div class="app-img">
+                        <img src="data:image/svg+xml;charset=UTF-8,%3Csvg width='300' height='160' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='300' height='160' fill='%233eb489'/%3E%3Ctext x='150' y='80' font-family='Arial' font-size='24' font-weight='bold' text-anchor='middle' fill='white'%3EDeepLearning.AI%3C/text%3E%3Ctext x='150' y='115' font-family='Arial' font-size='16' text-anchor='middle' fill='white'%3E人工智能教育平台%3C/text%3E%3C/svg%3E" alt="DeepLearning.AI">
+                        <div class="app-badge tool">在线课程</div>
+                    </div>
+                    <div class="app-info">
+                        <h3 class="app-name">
+                            DeepLearning.AI
+                            <i class="fas fa-check-circle verified" title="官方认证"></i>
+                        </h3>
+                        <p class="app-desc">Andrew Ng创办的AI教育平台，提供深度学习、机器学习和AI领域的高质量课程和专业认证。</p>
+                        <div class="app-meta">
+                            <span><i class="fas fa-graduation-cap"></i>数百万学生</span>
+                            <span><i class="fas fa-certificate"></i>专业认证</span>
+                        </div>
+                        <div class="app-actions">
+                            <a href="https://www.deeplearning.ai" class="app-link" target="_blank">访问网站<i class="fas fa-external-link-alt"></i></a>
+                            <div class="app-save"><i class="far fa-bookmark"></i></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="app-card" data-aos="fade-up" data-aos-delay="100" data-category="视频教程">
+                    <div class="app-img">
+                        <img src="data:image/svg+xml;charset=UTF-8,%3Csvg width='300' height='160' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='300' height='160' fill='%236a4c93'/%3E%3Ctext x='150' y='80' font-family='Arial' font-size='24' font-weight='bold' text-anchor='middle' fill='white'%3ECryptoZombies%3C/text%3E%3Ctext x='150' y='115' font-family='Arial' font-size='16' text-anchor='middle' fill='white'%3E区块链编程学习%3C/text%3E%3C/svg%3E" alt="CryptoZombies">
+                        <div class="app-badge web3">Web3教程</div>
+                    </div>
+                    <div class="app-info">
+                        <h3 class="app-name">
+                            CryptoZombies
+                            <i class="fas fa-check-circle verified" title="官方认证"></i>
+                        </h3>
+                        <p class="app-desc">通过构建僵尸游戏学习以太坊智能合约开发的互动教程，从入门到高级进阶，内容生动有趣。</p>
+                        <div class="app-meta">
+                            <span><i class="fas fa-users"></i>40万+学生</span>
+                            <span><i class="fas fa-gamepad"></i>边玩边学</span>
+                        </div>
+                        <div class="app-actions">
+                            <a href="https://cryptozombies.io" class="app-link" target="_blank">访问网站<i class="fas fa-external-link-alt"></i></a>
+                            <div class="app-save"><i class="far fa-bookmark"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 无搜索结果提示 -->
+            <div class="no-results" id="no-results-learn">
+                <i class="fas fa-search"></i>
+                <h3>没有找到匹配的学习资源</h3>
+                <p>尝试使用不同的关键词，或者浏览所有资源</p>
+            </div>
+        </section>
+        
+        <section id="utilities" data-aos="fade-up">
+            <h2 class="section-title">实用工具</h2>
+            
+            <div class="category-tabs">
+                <div class="category-tab active"><i class="fas fa-th"></i>全部</div>
+                <div class="category-tab"><i class="fas fa-code"></i>开发工具</div>
+                <div class="category-tab"><i class="fas fa-paint-brush"></i>设计工具</div>
+                <div class="category-tab"><i class="fas fa-comments"></i>协作工具</div>
+                <div class="category-tab"><i class="fas fa-chart-bar"></i>数据工具</div>
+            </div>
+            
+            <div class="app-grid">
+                <div class="app-card" data-aos="fade-up" data-category="开发工具">
+                    <div class="app-img">
+                        <img src="data:image/svg+xml;charset=UTF-8,%3Csvg width='300' height='160' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='300' height='160' fill='%2323282d'/%3E%3Ctext x='150' y='90' font-family='Arial' font-size='40' text-anchor='middle' fill='%2324acf2'%3EVS Code%3C/text%3E%3C/svg%3E" alt="VS Code">
+                        <div class="app-badge tool">Microsoft</div>
+                    </div>
+                    <div class="app-info">
+                        <h3 class="app-name">
+                            Visual Studio Code
+                            <i class="fas fa-check-circle verified" title="官方认证"></i>
+                        </h3>
+                        <p class="app-desc">微软开发的免费开源代码编辑器，支持多种编程语言，拥有丰富的插件生态，是目前最受欢迎的编辑器之一。</p>
+                        <div class="app-meta">
+                            <span><i class="fas fa-download"></i>超过2500万用户</span>
+                            <span><i class="fas fa-plug"></i>30,000+扩展</span>
+                        </div>
+                        <div class="app-actions">
+                            <a href="https://code.visualstudio.com" class="app-link" target="_blank">访问官网<i class="fas fa-external-link-alt"></i></a>
+                            <div class="app-save"><i class="far fa-bookmark"></i></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="app-card" data-aos="fade-up" data-aos-delay="100" data-category="设计工具">
+                    <div class="app-img">
+                        <img src="data:image/svg+xml;charset=UTF-8,%3Csvg width='300' height='160' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='300' height='160' fill='%23040404'/%3E%3Ctext x='150' y='90' font-family='Arial' font-size='40' text-anchor='middle' fill='%239061f9'%3EFigma%3C/text%3E%3C/svg%3E" alt="Figma">
+                        <div class="app-badge design">设计</div>
+                    </div>
+                    <div class="app-info">
+                        <h3 class="app-name">
+                            Figma
+                            <i class="fas fa-check-circle verified" title="官方认证"></i>
+                        </h3>
+                        <p class="app-desc">基于浏览器的协作设计工具，可用于UI/UX设计、原型制作，支持实时协作，使设计团队工作更高效。</p>
+                        <div class="app-meta">
+                            <span><i class="fas fa-users"></i>数百万用户</span>
+                            <span><i class="fas fa-globe"></i>云端协作</span>
+                        </div>
+                        <div class="app-actions">
+                            <a href="https://www.figma.com" class="app-link" target="_blank">访问官网<i class="fas fa-external-link-alt"></i></a>
+                            <div class="app-save"><i class="far fa-bookmark"></i></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="app-card" data-aos="fade-up" data-aos-delay="200" data-category="协作工具">
+                    <div class="app-img">
+                        <img src="data:image/svg+xml;charset=UTF-8,%3Csvg width='300' height='160' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='300' height='160' fill='%23512da8'/%3E%3Ctext x='150' y='90' font-family='Arial' font-size='40' text-anchor='middle' fill='white'%3ENotion%3C/text%3E%3C/svg%3E" alt="Notion">
+                        <div class="app-badge tool">生产力</div>
+                    </div>
+                    <div class="app-info">
+                        <h3 class="app-name">
+                            Notion
+                            <i class="fas fa-check-circle verified" title="官方认证"></i>
+                        </h3>
+                        <p class="app-desc">集笔记、知识库、任务管理、数据库于一体的全能工作平台，可用于个人管理和团队协作，功能极其强大。</p>
+                        <div class="app-meta">
+                            <span><i class="fas fa-clipboard-list"></i>多合一工具</span>
+                            <span><i class="fas fa-sync-alt"></i>无缝同步</span>
+                        </div>
+                        <div class="app-actions">
+                            <a href="https://www.notion.so" class="app-link" target="_blank">访问官网<i class="fas fa-external-link-alt"></i></a>
+                            <div class="app-save"><i class="far fa-bookmark"></i></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="app-card" data-aos="fade-up" data-aos-delay="300" data-category="数据工具">
+                    <div class="app-img">
+                        <img src="data:image/svg+xml;charset=UTF-8,%3Csvg width='300' height='160' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='300' height='160' fill='%23f2c744'/%3E%3Ctext x='150' y='90' font-family='Arial' font-size='40' text-anchor='middle' fill='%23333'%3EPower BI%3C/text%3E%3C/svg%3E" alt="Power BI">
+                        <div class="app-badge microsoft">微软</div>
+                    </div>
+                    <div class="app-info">
+                        <h3 class="app-name">
+                            Power BI
+                            <i class="fas fa-check-circle verified" title="官方认证"></i>
+                        </h3>
+                        <p class="app-desc">微软推出的商业智能工具，用于数据可视化和分析，可连接多种数据源，创建交互式报表和仪表盘。</p>
+                        <div class="app-meta">
+                            <span><i class="fas fa-chart-pie"></i>强大可视化</span>
+                            <span><i class="fas fa-database"></i>多种数据源</span>
+                        </div>
+                        <div class="app-actions">
+                            <a href="https://powerbi.microsoft.com" class="app-link" target="_blank">访问官网<i class="fas fa-external-link-alt"></i></a>
+                            <div class="app-save"><i class="far fa-bookmark"></i></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="app-card" data-aos="fade-up" data-category="协作工具">
+                    <div class="app-img">
+                        <img src="data:image/svg+xml;charset=UTF-8,%3Csvg width='300' height='160' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='300' height='160' fill='%234a154b'/%3E%3Ctext x='150' y='90' font-family='Arial' font-size='40' text-anchor='middle' fill='white'%3ESlack%3C/text%3E%3C/svg%3E" alt="Slack">
+                        <div class="app-badge communication">沟通</div>
+                    </div>
+                    <div class="app-info">
+                        <h3 class="app-name">
+                            Slack
+                            <i class="fas fa-check-circle verified" title="官方认证"></i>
+                        </h3>
+                        <p class="app-desc">专为团队协作设计的通讯平台，支持频道、私信、文件共享和丰富的集成，提高团队沟通效率。</p>
+                        <div class="app-meta">
+                            <span><i class="fas fa-building"></i>1000万+日活</span>
+                            <span><i class="fas fa-puzzle-piece"></i>2000+集成</span>
+                        </div>
+                        <div class="app-actions">
+                            <a href="https://slack.com" class="app-link" target="_blank">访问官网<i class="fas fa-external-link-alt"></i></a>
+                            <div class="app-save"><i class="far fa-bookmark"></i></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="app-card" data-aos="fade-up" data-aos-delay="100" data-category="开发工具">
+                    <div class="app-img">
+                        <img src="data:image/svg+xml;charset=UTF-8,%3Csvg width='300' height='160' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='300' height='160' fill='%230d9dda'/%3E%3Ctext x='150' y='90' font-family='Arial' font-size='40' text-anchor='middle' fill='white'%3EPostman%3C/text%3E%3C/svg%3E" alt="Postman">
+                        <div class="app-badge api">API开发</div>
+                    </div>
+                    <div class="app-info">
+                        <h3 class="app-name">
+                            Postman
+                            <i class="fas fa-check-circle verified" title="官方认证"></i>
+                        </h3>
+                        <p class="app-desc">API开发的协作平台，提供构建、测试、调试和部署API的工具，简化了API的开发和管理流程。</p>
+                        <div class="app-meta">
+                            <span><i class="fas fa-code"></i>2000万+开发者</span>
+                            <span><i class="fas fa-project-diagram"></i>API生命周期</span>
+                        </div>
+                        <div class="app-actions">
+                            <a href="https://www.postman.com" class="app-link" target="_blank">访问官网<i class="fas fa-external-link-alt"></i></a>
+                            <div class="app-save"><i class="far fa-bookmark"></i></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="app-card" data-aos="fade-up" data-aos-delay="200" data-category="数据工具">
+                    <div class="app-img">
+                        <img src="data:image/svg+xml;charset=UTF-8,%3Csvg width='300' height='160' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='300' height='160' fill='%23368a6b'/%3E%3Ctext x='150' y='90' font-family='Arial' font-size='40' text-anchor='middle' fill='white'%3EMongoDB%3C/text%3E%3C/svg%3E" alt="MongoDB">
+                        <div class="app-badge database">数据库</div>
+                    </div>
+                    <div class="app-info">
+                        <h3 class="app-name">
+                            MongoDB
+                            <i class="fas fa-check-circle verified" title="官方认证"></i>
+                        </h3>
+                        <p class="app-desc">领先的NoSQL数据库，基于文档存储，支持动态模式，适合处理大数据量和复杂的分布式应用。</p>
+                        <div class="app-meta">
+                            <span><i class="fas fa-server"></i>横向扩展</span>
+                            <span><i class="fas fa-cloud"></i>云服务</span>
+                        </div>
+                        <div class="app-actions">
+                            <a href="https://www.mongodb.com" class="app-link" target="_blank">访问官网<i class="fas fa-external-link-alt"></i></a>
+                            <div class="app-save"><i class="far fa-bookmark"></i></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="app-card" data-aos="fade-up" data-aos-delay="300" data-category="数据工具">
+                    <div class="app-img">
+                        <img src="data:image/svg+xml;charset=UTF-8,%3Csvg width='300' height='160' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='300' height='160' fill='%23ff8000'/%3E%3Ctext x='150' y='90' font-family='Arial' font-size='40' text-anchor='middle' fill='white'%3EGrafana%3C/text%3E%3C/svg%3E" alt="Grafana">
+                        <div class="app-badge">监控</div>
+                    </div>
+                    <div class="app-info">
+                        <h3 class="app-name">
+                            Grafana
+                            <i class="fas fa-check-circle verified" title="官方认证"></i>
+                        </h3>
+                        <p class="app-desc">开源的指标分析与可视化工具，可连接多种数据源，创建仪表盘，设置告警，广泛用于监控系统。</p>
+                        <div class="app-meta">
+                            <span><i class="fas fa-tachometer-alt"></i>实时监控</span>
+                            <span><i class="fas fa-bell"></i>告警系统</span>
+                        </div>
+                        <div class="app-actions">
+                            <a href="https://grafana.com" class="app-link" target="_blank">访问官网<i class="fas fa-external-link-alt"></i></a>
+                            <div class="app-save"><i class="far fa-bookmark"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 无搜索结果提示 -->
+            <div class="no-results" id="no-results-utilities">
+                <i class="fas fa-search"></i>
+                <h3>没有找到匹配的实用工具</h3>
+                <p>尝试使用不同的关键词，或者浏览所有工具</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-column">
+                <h3>关于我们</h3>
+                <p>AI与Web3导航致力于为用户提供最新、最优质的AI和Web3应用资源，帮助开发者和用户探索数字世界的前沿。我们精心筛选每一个应用，确保它们的安全性和实用性。</p>
+                <div class="social-links">
+                    <a href="#" class="social-link wechat"><i class="fab fa-weixin"></i></a>
+                    <a href="#" class="social-link video-channel"><i class="fas fa-play-circle"></i></a>
+                    <a href="https://github.com/youyongba" class="social-link" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://space.bilibili.com/677224790" class="social-link" target="_blank"><i class="fab fa-bilibili"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>快速链接</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-home"></i>首页</a></li>
+                    <li><a href="#ai"><i class="fas fa-brain"></i>AI应用</a></li>
+                    <li><a href="#web3"><i class="fas fa-link"></i>Web3应用</a></li>
+                    <li><a href="#tools"><i class="fas fa-tools"></i>开发工具</a></li>
+                    <li><a href="#learn"><i class="fas fa-graduation-cap"></i>学习资源</a></li>
+                    <li><a href="#utilities"><i class="fas fa-wrench"></i>实用工具</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>联系我们</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-envelope"></i>contact@aiwebdao.com</a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i>@AIWebDAO</a></li>
+                    <li><a href="#"><i class="fab fa-discord"></i>AIWebDAO社区</a></li>
+                    <li><a href="#"><i class="fas fa-headset"></i>在线客服</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>订阅更新</h3>
+                <p>订阅我们的周报，获取AI与Web3领域的最新动态和精选应用推荐。</p>
+                <form>
+                    <div>
+                        <input disabled type="email" placeholder="您的邮箱地址">
+                        <button disabled type="submit">订阅</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="copyright container">
+            <p>© 2025 AI与Web3导航 </p>
+        </div>
+    </footer>
+    
+    <!-- 微信二维码弹窗 -->
+    <div class="wechat-modal" id="wechatModal">
+        <div class="wechat-modal-content">
+            <button class="wechat-close" id="wechatClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3>微信号</h3>
+            <div class="qr-code">
+                <img src="weixin_image.png" alt="微信二维码">
+            </div>
+            <p>扫描二维码关注我的微信号</p>
+        </div>
+    </div>
+
+    <!-- 视频号二维码弹窗 -->
+    <div class="video-modal" id="videoModal">
+        <div class="video-modal-content">
+            <button class="video-close" id="videoClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3>微信视频号</h3>
+            <div class="qr-code">
+                <img src="./shipinhao_image.png" alt="视频号二维码">
+            </div>
+            <p>扫描二维码关注我们的微信视频号</p>
+        </div>
+    </div>
+    
+    <!-- 引入AOS动画库JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // 初始化AOS动画
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out',
+            once: true
+        });
+        
+        // 分类标签切换和过滤功能
+        function initializeCategoryTabs() {
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // 获取当前section
+                    const section = this.closest('section');
+                    const tabContainer = this.parentNode;
+                    const appGrid = section.querySelector('.app-grid');
+                    
+                    // 移除所有active类
+                    tabContainer.querySelectorAll('.category-tab').forEach(t => {
+                        t.classList.remove('active');
+                    });
+                    
+                    // 为当前点击的标签添加active类
+                    this.classList.add('active');
+                    
+                    // 获取选中的分类，只获取文本内容（排除图标）
+                    const textNodes = Array.from(this.childNodes).filter(node => node.nodeType === Node.TEXT_NODE);
+                    const selectedCategory = textNodes.length > 0 ? textNodes[0].textContent.trim() : this.textContent.trim();
+                    
+                    // 过滤应用卡片
+                    const appCards = appGrid.querySelectorAll('.app-card');
+                    let filteredIndex = 0;
+                    
+                    appCards.forEach((card, index) => {
+                        const cardCategories = card.getAttribute('data-category');
+                        
+                        if (selectedCategory === '全部' || !cardCategories) {
+                            // 显示所有卡片
+                            showCard(card, filteredIndex);
+                            filteredIndex++;
+                        } else if (cardCategories && cardCategories.includes(selectedCategory)) {
+                            // 显示匹配的卡片
+                            showCard(card, filteredIndex);
+                            filteredIndex++;
+                        } else {
+                            // 隐藏不匹配的卡片
+                            hideCard(card);
+                        }
+                    });
+                });
+            });
+        }
+        
+        function showCard(card, index) {
+            card.style.display = 'block';
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            
+            // 延迟添加动画，实现逐个显示效果
+            setTimeout(() => {
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, index * 100 + 50);
+        }
+        
+        function hideCard(card) {
+            card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(-20px)';
+            
+            // 延迟隐藏
+            setTimeout(() => {
+                card.style.display = 'none';
+            }, 300);
+        }
+        
+        // 搜索功能实现
+        function initializeSearch() {
+            const searchInput = document.querySelector('.search-box input');
+            const searchBox = document.querySelector('.search-box');
+            const clearBtn = document.querySelector('.search-box .clear-icon');
+            let searchTimeout;
+            
+            // 搜索输入事件
+            searchInput.addEventListener('input', function() {
+                // 更新搜索框状态
+                updateSearchBoxState();
+                
+                // 清除之前的定时器，实现防抖
+                clearTimeout(searchTimeout);
+                
+                searchTimeout = setTimeout(() => {
+                    const searchTerm = this.value.trim().toLowerCase();
+                    performSearch(searchTerm);
+                }, 300); // 300ms 防抖延迟
+            });
+            
+            // 支持回车键搜索
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    clearTimeout(searchTimeout);
+                    const searchTerm = this.value.trim().toLowerCase();
+                    performSearch(searchTerm);
+                }
+            });
+            
+            // 清除按钮点击事件
+            clearBtn.addEventListener('click', function() {
+                searchInput.value = '';
+                searchInput.focus();
+                updateSearchBoxState();
+                performSearch('');
+            });
+            
+            // 更新搜索框状态（显示/隐藏清除按钮）
+            function updateSearchBoxState() {
+                if (searchInput.value.trim() !== '') {
+                    searchBox.classList.add('has-content');
+                } else {
+                    searchBox.classList.remove('has-content');
+                }
+            }
+            
+            // 初始化状态
+            updateSearchBoxState();
+        }
+        
+        function performSearch(searchTerm) {
+            const allCards = document.querySelectorAll('.app-card');
+            const sections = ['ai', 'web3', 'tools', 'learn', 'utilities'];
+            const sectionResults = {};
+            let totalResults = 0;
+            
+            // 初始化每个section的结果计数
+            sections.forEach(section => {
+                sectionResults[section] = 0;
+            });
+            
+            // 如果搜索词为空，显示所有卡片并重置分类状态
+            if (searchTerm === '') {
+                allCards.forEach(card => {
+                    showSearchResult(card, 0);
+                    removeHighlight(card);
+                });
+                
+                // 隐藏所有无结果提示
+                hideAllNoResultsMessages();
+                
+                // 重置所有分类标签为"全部"
+                document.querySelectorAll('.category-tabs').forEach(tabContainer => {
+                    tabContainer.querySelectorAll('.category-tab').forEach(tab => {
+                        tab.classList.remove('active');
+                    });
+                    tabContainer.querySelector('.category-tab').classList.add('active');
+                });
+                
+                return;
+            }
+            
+            // 重置所有分类标签的活跃状态（搜索时不限制分类）
+            document.querySelectorAll('.category-tabs').forEach(tabContainer => {
+                tabContainer.querySelectorAll('.category-tab').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+            });
+            
+            allCards.forEach((card, index) => {
+                const appName = card.querySelector('.app-name').textContent.toLowerCase();
+                const appDesc = card.querySelector('.app-desc').textContent.toLowerCase();
+                const appBadge = card.querySelector('.app-badge') ? 
+                               card.querySelector('.app-badge').textContent.toLowerCase() : '';
+                
+                // 确定卡片所属的section
+                const section = card.closest('section').id;
+                
+                // 检查是否匹配搜索词
+                if (appName.includes(searchTerm) || 
+                    appDesc.includes(searchTerm) || 
+                    appBadge.includes(searchTerm)) {
+                    
+                    sectionResults[section]++;
+                    totalResults++;
+                    showSearchResult(card, sectionResults[section] - 1);
+                    highlightSearchTerm(card, searchTerm);
+                } else {
+                    hideSearchResult(card);
+                    removeHighlight(card);
+                }
+            });
+            
+            // 显示/隐藏每个section的无结果提示
+            sections.forEach(section => {
+                const noResultsElement = document.getElementById(`no-results-${section}`);
+                if (sectionResults[section] === 0) {
+                    noResultsElement.classList.add('show');
+                } else {
+                    noResultsElement.classList.remove('show');
+                }
+            });
+        }
+        
+        function hideAllNoResultsMessages() {
+            document.querySelectorAll('.no-results').forEach(element => {
+                element.classList.remove('show');
+            });
+        }
+        
+        function showSearchResult(card, index) {
+            card.style.display = 'block';
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            
+            // 延迟添加动画，实现逐个显示效果
+            setTimeout(() => {
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, index * 80 + 50);
+        }
+        
+        function hideSearchResult(card) {
+            card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(-20px)';
+            
+            setTimeout(() => {
+                card.style.display = 'none';
+            }, 300);
+        }
+        
+        function highlightSearchTerm(card, searchTerm) {
+            if (searchTerm === '') return;
+            
+            const appName = card.querySelector('.app-name');
+            const appDesc = card.querySelector('.app-desc');
+            
+            // 高亮应用名称中的匹配文本
+            highlightText(appName, searchTerm);
+            
+            // 高亮描述中的匹配文本
+            highlightText(appDesc, searchTerm);
+        }
+        
+        function highlightText(element, searchTerm) {
+            // 保存原始文本（如果还没有保存过）
+            if (!element.hasAttribute('data-original-text')) {
+                element.setAttribute('data-original-text', element.innerHTML);
+            }
+            
+            const originalText = element.getAttribute('data-original-text');
+            const regex = new RegExp(`(${escapeRegExp(searchTerm)})`, 'gi');
+            const highlightedText = originalText.replace(regex, '<mark style="background-color: #ffeb3b; padding: 2px 4px; border-radius: 3px; color: #333;">$1</mark>');
+            
+            element.innerHTML = highlightedText;
+        }
+        
+        function removeHighlight(card) {
+            const elementsToRestore = [
+                card.querySelector('.app-name'),
+                card.querySelector('.app-desc')
+            ];
+            
+            elementsToRestore.forEach(element => {
+                if (element && element.hasAttribute('data-original-text')) {
+                    element.innerHTML = element.getAttribute('data-original-text');
+                }
+            });
+        }
+        
+        function escapeRegExp(string) {
+            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+        
+        // 初始化分类标签功能
+        initializeCategoryTabs();
+        
+        // 初始化搜索功能
+        initializeSearch();
+        
+        // 页面加载完成后确保所有卡片都可见
+        function initializeCards() {
+            document.querySelectorAll('.app-card').forEach(card => {
+                card.style.display = 'block';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            });
+        }
+        
+        // 页面加载完成后初始化
+        initializeCards();
+
+        // 微信二维码弹窗功能
+        function initializeWechatModal() {
+            const wechatLink = document.querySelector('.social-link.wechat'); // 微信链接
+            const wechatModal = document.getElementById('wechatModal');
+            const wechatClose = document.getElementById('wechatClose');
+            
+            // 点击微信图标显示弹窗
+            wechatLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                showWechatModal();
+            });
+            
+            // 点击关闭按钮隐藏弹窗
+            wechatClose.addEventListener('click', function() {
+                hideWechatModal();
+            });
+            
+            // 点击弹窗背景隐藏弹窗
+            wechatModal.addEventListener('click', function(e) {
+                if (e.target === wechatModal) {
+                    hideWechatModal();
+                }
+            });
+            
+            // ESC键隐藏弹窗
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && wechatModal.classList.contains('show')) {
+                    hideWechatModal();
+                }
+            });
+            
+            function showWechatModal() {
+                wechatModal.style.display = 'flex';
+                // 延迟添加show类以触发动画
+                setTimeout(() => {
+                    wechatModal.classList.add('show');
+                }, 10);
+                // 阻止页面滚动
+                document.body.style.overflow = 'hidden';
+            }
+            
+            function hideWechatModal() {
+                wechatModal.classList.remove('show');
+                // 延迟隐藏以等待动画完成
+                setTimeout(() => {
+                    wechatModal.style.display = 'none';
+                }, 300);
+                // 恢复页面滚动
+                document.body.style.overflow = '';
+            }
+        }
+        
+        // 初始化微信弹窗功能
+        initializeWechatModal();
+
+        // 视频号二维码弹窗功能
+        function initializeVideoModal() {
+            const videoLink = document.querySelector('.social-link.video-channel'); // 视频号链接
+            const videoModal = document.getElementById('videoModal');
+            const videoClose = document.getElementById('videoClose');
+            
+            // 点击视频号图标显示弹窗
+            videoLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                showVideoModal();
+            });
+            
+            // 点击关闭按钮隐藏弹窗
+            videoClose.addEventListener('click', function() {
+                hideVideoModal();
+            });
+            
+            // 点击弹窗背景隐藏弹窗
+            videoModal.addEventListener('click', function(e) {
+                if (e.target === videoModal) {
+                    hideVideoModal();
+                }
+            });
+            
+            // ESC键隐藏弹窗
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && videoModal.classList.contains('show')) {
+                    hideVideoModal();
+                }
+            });
+            
+            function showVideoModal() {
+                videoModal.style.display = 'flex';
+                // 延迟添加show类以触发动画
+                setTimeout(() => {
+                    videoModal.classList.add('show');
+                }, 10);
+                // 阻止页面滚动
+                document.body.style.overflow = 'hidden';
+            }
+            
+            function hideVideoModal() {
+                videoModal.classList.remove('show');
+                // 延迟隐藏以等待动画完成
+                setTimeout(() => {
+                    videoModal.style.display = 'none';
+                }, 300);
+                // 恢复页面滚动
+                document.body.style.overflow = '';
+            }
+        }
+        
+        // 初始化视频号弹窗功能
+        initializeVideoModal();
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+            } else {
+                nav.style.boxShadow = '0 2px 8px rgba(0,0,0,0.05)';
+            }
+        });
+
+        // 收藏功能
+        document.querySelectorAll('.app-save').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                if (icon.classList.contains('far')) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                    this.style.color = '#e74c3c';
+                } else {
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                    this.style.color = '';
+                }
+            });
+        });
+
+        // 导航栏活跃状态
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        window.addEventListener('scroll', function() {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 300)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // 改进的图片加载处理
+        document.addEventListener('DOMContentLoaded', function() {
+            // 默认占位图（使用数据URI）
+            const placeholderImage = 'data:image/svg+xml;charset=UTF-8,%3Csvg width="300" height="160" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="300" height="160" fill="%23e5e5e5"/%3E%3Cpath d="M134.5 80 C 134.5 88.3 127.8 95 119.5 95 C 111.2 95 104.5 88.3 104.5 80 C 104.5 71.7 111.2 65 119.5 65 C 127.8 65 134.5 71.7 134.5 80 Z M 177 107 L 161 92.3 C 159.2 90.6 156.4 90.6 154.6 92.3 L 146.5 100 L 131.5 80 C 129.7 77.5 126.2 77.5 124.4 80 L 109 101 L 109 107 L 177 107 Z" fill="%23cccccc" /%3E%3Ctext x="150" y="125" font-family="Arial" font-size="12" text-anchor="middle" fill="%234d4d4d"%3E图片加载中%3C/text%3E%3C/svg%3E';
+            
+            // 为所有图片容器添加加载动画
+            document.querySelectorAll('.app-img').forEach(container => {
+                // 创建加载动画覆盖层
+                const loadingOverlay = document.createElement('div');
+                loadingOverlay.className = 'loading-overlay';
+                
+                const spinner = document.createElement('div');
+                spinner.className = 'spinner';
+                loadingOverlay.appendChild(spinner);
+                
+                container.appendChild(loadingOverlay);
+                
+                // 获取图片元素
+                const img = container.querySelector('img');
+                
+                // 设置图片加载回调
+                img.onload = function() {
+                    // 移除加载动画
+                    if (loadingOverlay.parentNode) {
+                        loadingOverlay.parentNode.removeChild(loadingOverlay);
+                    }
+                    // 显示图片
+                    img.classList.add('loaded');
+                };
+                
+                // 设置图片加载错误回调
+                img.onerror = function() {
+                    // 如果不是已经设置为占位图，则替换为占位图
+                    if (img.src !== placeholderImage) {
+                        img.src = placeholderImage;
+                    } else {
+                        // 如果已经是占位图但仍然出错，移除加载动画
+                        if (loadingOverlay.parentNode) {
+                            loadingOverlay.parentNode.removeChild(loadingOverlay);
+                        }
+                        img.classList.add('loaded');
+                    }
+                };
+                
+                // 预加载图片，如果当前图片是外部链接
+                if (img.src.startsWith('http')) {
+                    // 先设置为占位图
+                    const originalSrc = img.src;
+                    img.src = placeholderImage;
+                    
+                    // 创建一个新的图片对象来预加载
+                    const preloadImg = new Image();
+                    preloadImg.onload = function() {
+                        // 预加载成功，替换回原始图片
+                        img.src = originalSrc;
+                    };
+                    preloadImg.onerror = function() {
+                        // 预加载失败，保持占位图状态
+                        // 移除加载动画
+                        if (loadingOverlay.parentNode) {
+                            loadingOverlay.parentNode.removeChild(loadingOverlay);
+                        }
+                        img.classList.add('loaded');
+                    };
+                    preloadImg.src = originalSrc;
+                } else {
+                    // 如果是数据URI或本地图片，直接标记为已加载
+                    if (img.complete) {
+                        if (loadingOverlay.parentNode) {
+                            loadingOverlay.parentNode.removeChild(loadingOverlay);
+                        }
+                        img.classList.add('loaded');
+                    }
+                }
+            });
+            
+            // 替换AI应用部分的图片为数据URI
+            const aiImages = {
+                'chatgpt': 'data:image/svg+xml;charset=UTF-8,%3Csvg width="300" height="160" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="300" height="160" fill="%23e56045"/%3E%3Ctext x="150" y="80" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="white"%3EChatGPT%3C/text%3E%3Ctext x="150" y="115" font-family="Arial" font-size="16" text-anchor="middle" fill="white"%3EOpenAI%3C/text%3E%3C/svg%3E',
+                'midjourney': 'data:image/svg+xml;charset=UTF-8,%3Csvg width="300" height="160" xmlns="http://www.w3.org/2000/svg"%3E%3Cdefs%3E%3ClinearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%"%3E%3Cstop offset="0%" style="stop-color:%23e56045;stop-opacity:1" /%3E%3Cstop offset="100%" style="stop-color:%23cc553d;stop-opacity:1" /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width="300" height="160" fill="url(%23grad)"/%3E%3Ctext x="150" y="80" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="white"%3EMidjourney%3C/text%3E%3Ctext x="150" y="115" font-family="Arial" font-size="16" text-anchor="middle" fill="white"%3EAI图像生成%3C/text%3E%3C/svg%3E',
+                'dalle': 'data:image/svg+xml;charset=UTF-8,%3Csvg width="300" height="160" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="300" height="160" fill="%231a1a1a"/%3E%3Ctext x="150" y="80" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="white"%3EDALL-E 3%3C/text%3E%3Ctext x="150" y="115" font-family="Arial" font-size="16" text-anchor="middle" fill="white"%3EOpenAI%3C/text%3E%3C/svg%3E',
+                'notion': 'data:image/svg+xml;charset=UTF-8,%3Csvg width="300" height="160" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="300" height="160" fill="%231a1a1a"/%3E%3Ctext x="150" y="80" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="white"%3ENotion AI%3C/text%3E%3Ctext x="150" y="115" font-family="Arial" font-size="16" text-anchor="middle" fill="white"%3E智能协作平台%3C/text%3E%3C/svg%3E'
+            };
+            
+            // 查找并替换AI应用部分的图片
+            document.querySelectorAll('#ai .app-card').forEach((card, index) => {
+                const img = card.querySelector('img');
+                const appName = card.querySelector('.app-name').textContent.trim().toLowerCase();
+                
+                // 根据应用名或索引选择合适的图片
+                let newSrc = '';
+                if (appName.includes('chatgpt')) {
+                    newSrc = aiImages.chatgpt;
+                } else if (appName.includes('midjourney')) {
+                    newSrc = aiImages.midjourney;
+                } else if (appName.includes('dall-e')) {
+                    newSrc = aiImages.dalle;
+                } else if (appName.includes('notion')) {
+                    newSrc = aiImages.notion;
+                } else {
+                    // 使用索引来匹配
+                    const keys = Object.keys(aiImages);
+                    if (index < keys.length) {
+                        newSrc = aiImages[keys[index]];
+                    }
+                }
+                
+                // 如果找到匹配的图片，替换外部链接
+                if (newSrc && img.src.startsWith('http')) {
+                    img.src = newSrc;
+                    img.classList.add('loaded');
+                    
+                    // 移除加载动画
+                    const loadingOverlay = card.querySelector('.loading-overlay');
+                    if (loadingOverlay) {
+                        loadingOverlay.parentNode.removeChild(loadingOverlay);
+                    }
+                }
+            });
+            
+            // 替换Web3应用部分的图片为数据URI
+            const web3Images = {
+                'uniswap': 'data:image/svg+xml;charset=UTF-8,%3Csvg width="300" height="160" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="300" height="160" fill="%23f7941d"/%3E%3Ctext x="150" y="80" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="white"%3EUniswap%3C/text%3E%3Ctext x="150" y="115" font-family="Arial" font-size="16" text-anchor="middle" fill="white"%3E去中心化交易所%3C/text%3E%3C/svg%3E',
+                'opensea': 'data:image/svg+xml;charset=UTF-8,%3Csvg width="300" height="160" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="300" height="160" fill="%2300aeef"/%3E%3Ctext x="150" y="80" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="white"%3EOpenSea%3C/text%3E%3Ctext x="150" y="115" font-family="Arial" font-size="16" text-anchor="middle" fill="white"%3ENFT交易市场%3C/text%3E%3C/svg%3E',
+                'aave': 'data:image/svg+xml;charset=UTF-8,%3Csvg width="300" height="160" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="300" height="160" fill="%23cc7b18"/%3E%3Ctext x="150" y="80" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="white"%3EAave%3C/text%3E%3Ctext x="150" y="115" font-family="Arial" font-size="16" text-anchor="middle" fill="white"%3E去中心化借贷平台%3C/text%3E%3C/svg%3E',
+                'decentraland': 'data:image/svg+xml;charset=UTF-8,%3Csvg width="300" height="160" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="300" height="160" fill="%23ffd199"/%3E%3Ctext x="150" y="80" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="%234d4d4d"%3EDecentraland%3C/text%3E%3Ctext x="150" y="115" font-family="Arial" font-size="16" text-anchor="middle" fill="%234d4d4d"%3E区块链虚拟世界%3C/text%3E%3C/svg%3E'
+            };
+            
+            // 查找并替换Web3应用部分的图片
+            document.querySelectorAll('#web3 .app-card').forEach((card, index) => {
+                const img = card.querySelector('img');
+                const appName = card.querySelector('.app-name').textContent.trim().toLowerCase();
+                
+                // 根据应用名或索引选择合适的图片
+                let newSrc = '';
+                if (appName.includes('uniswap')) {
+                    newSrc = web3Images.uniswap;
+                } else if (appName.includes('opensea')) {
+                    newSrc = web3Images.opensea;
+                } else if (appName.includes('aave')) {
+                    newSrc = web3Images.aave;
+                } else if (appName.includes('decentraland')) {
+                    newSrc = web3Images.decentraland;
+                } else {
+                    // 使用索引来匹配
+                    const keys = Object.keys(web3Images);
+                    if (index < keys.length) {
+                        newSrc = web3Images[keys[index]];
+                    }
+                }
+                
+                // 如果找到匹配的图片，替换外部链接
+                if (newSrc && img.src.startsWith('http')) {
+                    img.src = newSrc;
+                    img.classList.add('loaded');
+                    
+                    // 移除加载动画
+                    const loadingOverlay = card.querySelector('.loading-overlay');
+                    if (loadingOverlay) {
+                        loadingOverlay.parentNode.removeChild(loadingOverlay);
+                    }
+                }
+            });
+            
+            // 替换工具和学习资源的图片
+            const toolsImages = {
+                'huggingface': 'data:image/svg+xml;charset=UTF-8,%3Csvg width="300" height="160" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="300" height="160" fill="%23ffbd59"/%3E%3Ctext x="150" y="80" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="black"%3EHugging Face%3C/text%3E%3Ctext x="150" y="115" font-family="Arial" font-size="16" text-anchor="middle" fill="black"%3EAI模型平台%3C/text%3E%3C/svg%3E',
+                'remix': 'data:image/svg+xml;charset=UTF-8,%3Csvg width="300" height="160" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="300" height="160" fill="%236e7681"/%3E%3Ctext x="150" y="80" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="white"%3ERemix IDE%3C/text%3E%3Ctext x="150" y="115" font-family="Arial" font-size="16" text-anchor="middle" fill="white"%3E智能合约开发环境%3C/text%3E%3C/svg%3E',
+                'tensorflow': 'data:image/svg+xml;charset=UTF-8,%3Csvg width="300" height="160" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="300" height="160" fill="%23ff6f00"/%3E%3Ctext x="150" y="80" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="white"%3ETensorFlow%3C/text%3E%3Ctext x="150" y="115" font-family="Arial" font-size="16" text-anchor="middle" fill="white"%3E机器学习框架%3C/text%3E%3C/svg%3E',
+                'hardhat': 'data:image/svg+xml;charset=UTF-8,%3Csvg width="300" height="160" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="300" height="160" fill="%23f0b90b"/%3E%3Ctext x="150" y="80" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="black"%3EHardhat%3C/text%3E%3Ctext x="150" y="115" font-family="Arial" font-size="16" text-anchor="middle" fill="black"%3E以太坊开发环境%3C/text%3E%3C/svg%3E',
+                'deeplearning': 'data:image/svg+xml;charset=UTF-8,%3Csvg width="300" height="160" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="300" height="160" fill="%233eb489"/%3E%3Ctext x="150" y="80" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="white"%3EDeepLearning.AI%3C/text%3E%3Ctext x="150" y="115" font-family="Arial" font-size="16" text-anchor="middle" fill="white"%3E人工智能教育平台%3C/text%3E%3C/svg%3E',
+                'cryptozombies': 'data:image/svg+xml;charset=UTF-8,%3Csvg width="300" height="160" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="300" height="160" fill="%236a4c93"/%3E%3Ctext x="150" y="80" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="white"%3ECryptoZombies%3C/text%3E%3Ctext x="150" y="115" font-family="Arial" font-size="16" text-anchor="middle" fill="white"%3E区块链编程学习%3C/text%3E%3C/svg%3E'
+            };
+            
+            // 查找并替换工具和学习资源部分的图片
+            document.querySelectorAll('#tools .app-card, #learn .app-card').forEach((card, index) => {
+                const img = card.querySelector('img');
+                const appName = card.querySelector('.app-name').textContent.trim().toLowerCase();
+                
+                // 根据应用名选择合适的图片
+                let newSrc = '';
+                if (appName.includes('hugging face')) {
+                    newSrc = toolsImages.huggingface;
+                } else if (appName.includes('remix')) {
+                    newSrc = toolsImages.remix;
+                } else if (appName.includes('tensorflow')) {
+                    newSrc = toolsImages.tensorflow;
+                } else if (appName.includes('hardhat')) {
+                    newSrc = toolsImages.hardhat;
+                } else if (appName.includes('deeplearning')) {
+                    newSrc = toolsImages.deeplearning;
+                } else if (appName.includes('cryptozombies')) {
+                    newSrc = toolsImages.cryptozombies;
+                }
+                
+                // 如果找到匹配的图片，替换外部链接
+                if (newSrc && img.src.startsWith('http')) {
+                    img.src = newSrc;
+                    img.classList.add('loaded');
+                    
+                    // 移除加载动画
+                    const loadingOverlay = card.querySelector('.loading-overlay');
+                    if (loadingOverlay) {
+                        loadingOverlay.parentNode.removeChild(loadingOverlay);
+                    }
+                }
+            });
+        });
+
+        // 修复鼠标悬停效果
+        document.querySelectorAll('.app-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                const img = this.querySelector('.app-img img');
+                if (img) {
+                    img.style.transform = 'scale(1.05)';
+                }
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                const img = this.querySelector('.app-img img');
+                if (img) {
+                    img.style.transform = '';
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

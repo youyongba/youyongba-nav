@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI与Web3应用导航 - 应用管理</title>
+    <!-- 引入Google字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- 引入Font Awesome图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* 结构色 */
+            --dark-color: #1a1a1a;
+            --dark-bg: #282d3e;
+            --darker-bg: #1f2333;
+            --text-color: #4d4d4d;
+            --text-light: #999999;
+            --border-color: #cccccc;
+            --bg-light: #f0f2f5;
+            --light-color: #ffffff;
+            
+            /* 品牌色 */
+            --primary-color: #e56045;
+            --primary-hover: #cc553d;
+            --primary-active: #cc553d;
+            --secondary-color: #cc553d;
+            --accent-color: #ffb9b2;
+            
+            /* 指示器色 */
+            --info-color: #00aeef;
+            --info-light: #8bdfff;
+            --info-bg: rgba(0, 174, 239, 0.1);
+            --info-dark: #007ba9;
+            
+            --success-color: #53cfc8;
+            --success-light: #a1e5e2;
+            --success-bg: rgba(83, 207, 200, 0.1);
+            --success-dark: #609996;
+            
+            --warning-color: #f7941d;
+            --warning-light: #ffd199;
+            --warning-bg: rgba(247, 148, 29, 0.1);
+            --warning-dark: #cc7b18;
+            
+            --danger-color: #f44336;
+            
+            --neutral-color: #736357;
+            --text-secondary: #999999;
+            
+            /* 卡片和背景 */
+            --card-bg: #ffffff;
+            --card-bg-hover: #f0f2f5;
+            
+            /* 阴影变量 */
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --box-shadow-hover: 0 6px 10px rgba(0, 0, 0, 0.15);
+            --inner-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            
+            /* 圆角变量 */
+            --border-radius-sm: 6px;
+            --border-radius: 8px;
+            --border-radius-lg: 12px;
+            
+            /* 标准间距 */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            
+            /* 组件大小 */
+            --sidebar-width: 260px;
+            --header-height: 60px;
+            --card-height: 180px;
+            --input-height: 40px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* 侧边栏导航 */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--dark-bg);
+            color: white;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            overflow-y: auto;
+            transition: var(--transition);
+            z-index: 100;
+        }
+        
+        .sidebar-header {
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 0.4rem;
+        }
+        
+        .sidebar-logo i {
+            font-size: 1.8rem;
+            margin-right: 10px;
+            color: var(--primary-color);
+            flex-shrink: 0;
+        }
+        
+        .sidebar-logo h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            white-space: nowrap;
+            line-height: 1.2;
+        }
+        
+        .sidebar-subtitle {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            text-align: center;
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+        
+        .user-info {
+            flex: 1;
+            overflow: hidden;
+        }
+        
+        .user-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .user-role {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .nav-menu {
+            padding: 1rem 0;
+        }
+        
+        .nav-section {
+            margin-bottom: 1rem;
+        }
+        
+        .nav-section-title {
+            padding: 0.4rem 1.5rem;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            opacity: 0.5;
+            letter-spacing: 1px;
+        }
+        
+        .nav-item {
+            padding: 0.7rem 1.5rem;
+            display: flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+            margin: 0.15rem 0;
+        }
+        
+        .nav-item:hover, .nav-item.active {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: white;
+        }
+        
+        .nav-item.active {
+            border-left: 3px solid var(--primary-color);
+            background-color: var(--secondary-color);
+        }
+        
+        .nav-item i {
+            width: 20px;
+            text-align: center;
+            margin-right: 12px;
+            font-size: 1rem;
+        }
+        
+        .nav-item span {
+            flex: 1;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .sidebar-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            position: sticky;
+            bottom: 0;
+            background: inherit;
+        }
+        
+        .sidebar-toggle {
+            position: fixed;
+            left: var(--sidebar-width);
+            top: 15px;
+            background-color: white;
+            color: var(--text-color);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+            z-index: 99;
+            transition: var(--transition);
+        }
+        
+        /* 主内容区域 */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 1.5rem;
+            transition: var(--transition);
+        }
+        
+        /* 顶部栏 */
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.8rem;
+            background-color: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius-sm);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .page-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .search-box {
+            position: relative;
+            width: 280px;
+        }
+        
+        .search-box input {
+            padding: 8px 12px 8px 38px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-light);
+            font-size: 0.9rem;
+            width: 100%;
+            transition: var(--transition);
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background-color: white;
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+        
+        /* 应用管理页面样式 */
+        .action-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+        
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        .filter-select {
+            padding: 0.5rem 0.8rem;
+            border-radius: var(--border-radius-sm);
+            border: 1px solid var(--border-color);
+            background-color: white;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            outline: none;
+        }
+        
+        .filter-select:focus {
+            border-color: var(--primary-color);
+        }
+        
+        .action-btn {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius-sm);
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .action-btn:hover {
+            background-color: var(--primary-hover);
+        }
+        
+        .action-btn i {
+            margin-right: 6px;
+        }
+        
+        /* 应用表格 */
+        .apps-table-container {
+            background-color: white;
+            border-radius: var(--border-radius-sm);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+        
+        .apps-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .apps-table th {
+            padding: 1rem;
+            text-align: left;
+            background-color: var(--bg-light);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .apps-table td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid var(--bg-light);
+            font-size: 0.9rem;
+        }
+        
+        .apps-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .apps-table tr:hover {
+            background-color: var(--bg-light);
+        }
+        
+        .app-item-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .app-item-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .app-item-name {
+            font-weight: 500;
+            color: var(--dark-color);
+            margin-bottom: 0.2rem;
+        }
+        
+        .app-item-url {
+            font-size: 0.8rem;
+            color: var(--info-color);
+        }
+        
+        .app-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+        }
+        
+        .app-category-tag {
+            padding: 0.2rem 0.5rem;
+            border-radius: 50px;
+            background-color: var(--bg-light);
+            font-size: 0.75rem;
+            color: var(--text-light);
+            white-space: nowrap;
+        }
+        
+        .app-status {
+            padding: 0.3rem 0.6rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            display: inline-block;
+        }
+        
+        .status-active {
+            background-color: var(--success-light);
+            color: var(--success-dark);
+        }
+        
+        .status-inactive {
+            background-color: var(--light-primary);
+            color: var(--secondary-color);
+        }
+        
+        .status-pending {
+            background-color: var(--warning-light);
+            color: var(--warning-dark);
+        }
+        
+        .app-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .app-action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .app-action-btn:hover {
+            background-color: var(--bg-light);
+        }
+        
+        .app-action-btn.edit:hover {
+            color: var(--warning-dark);
+        }
+        
+        .app-action-btn.view:hover {
+            color: var(--info-color);
+        }
+        
+        .app-action-btn.delete:hover {
+            color: var(--secondary-color);
+        }
+        
+        /* 分页 */
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        
+        .pagination-info {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-right: 1rem;
+        }
+        
+        .pagination-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            font-size: 0.9rem;
+            margin: 0 0.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .pagination-btn:hover, .pagination-btn.active {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+        
+        .pagination-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .pagination-btn.disabled:hover {
+            background-color: white;
+            border-color: var(--border-color);
+            color: var(--text-color);
+        }
+        
+        /* 响应式布局 */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 70px;
+                transform: translateX(0);
+            }
+            
+            .sidebar.expanded {
+                width: var(--sidebar-width);
+            }
+            
+            .sidebar:not(.expanded) .sidebar-logo h2, 
+            .sidebar:not(.expanded) .sidebar-subtitle,
+            .sidebar:not(.expanded) .user-info,
+            .sidebar:not(.expanded) .nav-section-title,
+            .sidebar:not(.expanded) .nav-item span {
+                display: none;
+            }
+            
+            .sidebar:not(.expanded) .sidebar-header,
+            .sidebar:not(.expanded) .user-profile,
+            .sidebar:not(.expanded) .nav-item {
+                text-align: center;
+                padding: 1rem;
+            }
+            
+            .sidebar:not(.expanded) .sidebar-logo,
+            .sidebar:not(.expanded) .nav-item {
+                justify-content: center;
+            }
+            
+            .sidebar:not(.expanded) .nav-item i {
+                margin-right: 0;
+            }
+            
+            .sidebar-toggle {
+                left: 70px;
+            }
+            
+            .sidebar.expanded .sidebar-toggle {
+                left: var(--sidebar-width);
+            }
+            
+            .main-content {
+                margin-left: 70px;
+            }
+            
+            .sidebar.expanded + .main-content {
+                margin-left: var(--sidebar-width);
+            }
+            
+            .action-bar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .filter-group {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .filter-select {
+                flex: 1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .search-box {
+                width: 100%;
+                margin-top: 1rem;
+            }
+            
+            .apps-table th:nth-child(3),
+            .apps-table td:nth-child(3) {
+                display: none;
+            }
+            
+            .pagination {
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .sidebar {
+                transform: translateX(-100%);
+                z-index: 1000;
+            }
+            
+            .sidebar.expanded {
+                transform: translateX(0);
+                width: var(--sidebar-width);
+            }
+            
+            .sidebar-toggle {
+                left: 15px;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 0.8rem;
+            }
+            
+            .apps-table th:nth-child(4),
+            .apps-table td:nth-child(4) {
+                display: none;
+            }
+            
+            .app-item-info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .app-item-icon {
+                margin-bottom: 0.5rem;
+            }
+        }
+        
+        /* 滚动条美化 */
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        /* 添加模态窗口样式 */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal.show .modal-content {
+            transform: translateY(0);
+        }
+        
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(3px);
+            cursor: pointer;
+        }
+        
+        .modal-content {
+            position: relative;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            background-color: white;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--box-shadow-hover);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            z-index: 1001;
+        }
+        
+        .modal-header {
+            padding: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.25rem;
+            color: var(--dark-color);
+        }
+        
+        .modal-body {
+            padding: var(--spacing-md);
+        }
+        
+        .btn-close {
+            background: transparent;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: color 0.2s;
+            padding: 4px;
+            line-height: 1;
+        }
+        
+        .btn-close:hover {
+            color: var(--dark-color);
+        }
+        
+        /* 表单样式 */
+        .form-group {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .form-row {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: var(--spacing-xs);
+            color: var(--dark-color);
+            font-weight: 500;
+        }
+        
+        input[type="text"],
+        input[type="url"],
+        input[type="email"],
+        input[type="number"],
+        input[type="password"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px 12px;
+            background-color: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-sm);
+            color: var(--text-color);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        input[type="color"] {
+            width: 100%;
+            height: 40px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-sm);
+            background-color: white;
+            cursor: pointer;
+        }
+        
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%234d4d4d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 32px;
+        }
+        
+        small {
+            display: block;
+            color: var(--text-light);
+            font-size: 0.8rem;
+            margin-top: 4px;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-lg);
+        }
+        
+        /* 按钮样式 */
+        .btn {
+            padding: 8px 16px;
+            border-radius: var(--border-radius-sm);
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-sm {
+            padding: 4px 12px;
+            font-size: 0.85rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+        
+        .btn-primary:active {
+            background-color: var(--primary-active);
+        }
+        
+        .btn-secondary {
+            background-color: var(--bg-light);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e5e5e5;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--bg-light);
+        }
+        
+        /* 标签容器样式 */
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-xs);
+            margin-top: var(--spacing-sm);
+        }
+        
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            background-color: var(--primary-color);
+            border-radius: var(--border-radius-sm);
+            color: #fff;
+            font-size: 0.8rem;
+        }
+        
+        .tag.status-active {
+            background-color: var(--success-color);
+        }
+        
+        .tag.status-inactive {
+            background-color: var(--text-light);
+        }
+        
+        /* 重定向预览区域样式 */
+        .redirect-preview {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm);
+            background-color: var(--bg-light);
+            border-radius: var(--border-radius-sm);
+            margin-top: var(--spacing-xs);
+        }
+        
+        .redirect-url {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: var(--text-color);
+            font-size: 0.85rem;
+            font-family: monospace;
+        }
+        
+        /* 消息通知样式 */
+        .message {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--border-radius-sm);
+            margin-bottom: var(--spacing-md);
+            display: none;
+        }
+        
+        .message.error {
+            background-color: rgba(244, 67, 54, 0.1);
+            border: 1px solid var(--danger-color);
+            color: var(--danger-color);
+        }
+        
+        .message.success {
+            background-color: rgba(83, 207, 200, 0.1);
+            border: 1px solid var(--success-color);
+            color: var(--success-dark);
+        }
+        
+        .message.visible {
+            display: block;
+        }
+        
+        /* 错误和成功消息 */
+        .error-message {
+            color: var(--danger-color);
+            font-size: 0.75rem;
+            margin-top: 0.3rem;
+        }
+        
+        .success-message {
+            background-color: var(--success-bg);
+            color: var(--success-dark);
+            padding: 0.75rem;
+            border-radius: var(--border-radius-sm);
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .success-message i {
+            color: var(--success-color);
+        }
+        
+        .error {
+            border-color: var(--danger-color) !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- 侧边栏导航 -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-robot"></i>
+                <h2>AI与Web3导航</h2>
+            </div>
+            <div class="sidebar-subtitle">后台管理系统</div>
+        </div>
+        
+        <div class="user-profile">
+            <div class="user-avatar">A</div>
+            <div class="user-info">
+                <div class="user-name">管理员</div>
+                <div class="user-role">超级管理员</div>
+            </div>
+        </div>
+        
+        <nav class="nav-menu">
+            <div class="nav-section">
+                <div class="nav-section-title">主要功能</div>
+                <a href="admin_dashboard.html" class="nav-item">
+                    <i class="fas fa-home"></i>
+                    <span>仪表盘</span>
+                </a>
+                <a href="apps_management.html" class="nav-item active">
+                    <i class="fas fa-shapes"></i>
+                    <span>应用管理</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-folder"></i>
+                    <span>分类管理</span>
+                </a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">系统设置</div>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>系统设置</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-history"></i>
+                    <span>操作日志</span>
+                </a>
+            </div>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="admin_login.html" class="nav-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>退出登录</span>
+            </a>
+        </div>
+    </aside>
+    
+    <div class="sidebar-toggle" id="sidebarToggle">
+        <i class="fas fa-bars"></i>
+    </div>
+    
+    <!-- 主内容区域 -->
+    <main class="main-content">
+        <!-- 顶部栏 -->
+        <div class="topbar">
+            <h1 class="page-title">应用管理</h1>
+            
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="搜索应用名称、分类或标签...">
+            </div>
+        </div>
+        
+        <!-- 操作栏 -->
+        <div class="action-bar">
+            <div class="filter-group">
+                <select class="filter-select">
+                    <option value="">全部分类</option>
+                    <option value="AI聊天">AI聊天</option>
+                    <option value="AI绘画">AI绘画</option>
+                    <option value="Web3">Web3</option>
+                    <option value="开发工具">开发工具</option>
+                </select>
+                
+                <select class="filter-select">
+                    <option value="">全部状态</option>
+                    <option value="active">已上线</option>
+                    <option value="inactive">已下线</option>
+                    <option value="pending">待审核</option>
+                </select>
+                
+                <select class="filter-select">
+                    <option value="">排序方式</option>
+                    <option value="popular">热度优先</option>
+                    <option value="newest">最新上线</option>
+                    <option value="alpha">字母顺序</option>
+                </select>
+            </div>
+            
+            <button class="action-btn" id="addAppBtn">
+                <i class="fas fa-plus"></i> 添加应用
+            </button>
+        </div>
+        
+        <!-- 应用表格 -->
+        <div class="apps-table-container">
+            <table class="apps-table">
+                <thead>
+                    <tr>
+                        <th style="width: 35%;">应用信息</th>
+                        <th style="width: 25%;">分类</th>
+                        <th style="width: 15%;">访问量</th>
+                        <th style="width: 10%;">状态</th>
+                        <th style="width: 15%;">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="app-item-info">
+                                <div class="app-item-icon" style="background-color: var(--info-bg); color: var(--info-dark);">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <div>
+                                    <div class="app-item-name">ChatGPT</div>
+                                    <div class="app-item-url">https://chat.openai.com</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="app-categories">
+                                <span class="app-category-tag">AI聊天</span>
+                                <span class="app-category-tag">文本生成</span>
+                            </div>
+                        </td>
+                        <td>48,573</td>
+                        <td><span class="app-status status-active">已上线</span></td>
+                        <td>
+                            <div class="app-actions">
+                                <button class="app-action-btn view" title="查看">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="app-action-btn edit" title="编辑">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="app-action-btn delete" title="删除">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="app-item-info">
+                                <div class="app-item-icon" style="background-color: var(--success-bg); color: var(--success-dark);">
+                                    <i class="fas fa-image"></i>
+                                </div>
+                                <div>
+                                    <div class="app-item-name">Midjourney</div>
+                                    <div class="app-item-url">https://www.midjourney.com</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="app-categories">
+                                <span class="app-category-tag">AI绘画</span>
+                                <span class="app-category-tag">图像生成</span>
+                            </div>
+                        </td>
+                        <td>36,421</td>
+                        <td><span class="app-status status-active">已上线</span></td>
+                        <td>
+                            <div class="app-actions">
+                                <button class="app-action-btn view" title="查看">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="app-action-btn edit" title="编辑">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="app-action-btn delete" title="删除">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="app-item-info">
+                                <div class="app-item-icon" style="background-color: rgba(229, 96, 69, 0.1); color: var(--secondary-color);">
+                                    <i class="fas fa-cube"></i>
+                                </div>
+                                <div>
+                                    <div class="app-item-name">MetaMask</div>
+                                    <div class="app-item-url">https://metamask.io</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="app-categories">
+                                <span class="app-category-tag">Web3</span>
+                                <span class="app-category-tag">钱包</span>
+                            </div>
+                        </td>
+                        <td>29,837</td>
+                        <td><span class="app-status status-active">已上线</span></td>
+                        <td>
+                            <div class="app-actions">
+                                <button class="app-action-btn view" title="查看">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="app-action-btn edit" title="编辑">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="app-action-btn delete" title="删除">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="app-item-info">
+                                <div class="app-item-icon" style="background-color: var(--warning-bg); color: var(--warning-dark);">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <div>
+                                    <div class="app-item-name">GitHub Copilot</div>
+                                    <div class="app-item-url">https://github.com/features/copilot</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="app-categories">
+                                <span class="app-category-tag">AI编程</span>
+                                <span class="app-category-tag">开发工具</span>
+                            </div>
+                        </td>
+                        <td>21,945</td>
+                        <td><span class="app-status status-active">已上线</span></td>
+                        <td>
+                            <div class="app-actions">
+                                <button class="app-action-btn view" title="查看">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="app-action-btn edit" title="编辑">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="app-action-btn delete" title="删除">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="app-item-info">
+                                <div class="app-item-icon" style="background-color: var(--info-bg); color: var(--info-dark);">
+                                    <i class="fas fa-microchip"></i>
+                                </div>
+                                <div>
+                                    <div class="app-item-name">Claude AI</div>
+                                    <div class="app-item-url">https://claude.ai</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="app-categories">
+                                <span class="app-category-tag">AI聊天</span>
+                                <span class="app-category-tag">文本生成</span>
+                            </div>
+                        </td>
+                        <td>18,624</td>
+                        <td><span class="app-status status-active">已上线</span></td>
+                        <td>
+                            <div class="app-actions">
+                                <button class="app-action-btn view" title="查看">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="app-action-btn edit" title="编辑">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="app-action-btn delete" title="删除">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="app-item-info">
+                                <div class="app-item-icon" style="background-color: var(--success-bg); color: var(--success-dark);">
+                                    <i class="fas fa-brain"></i>
+                                </div>
+                                <div>
+                                    <div class="app-item-name">Anthropic</div>
+                                    <div class="app-item-url">https://www.anthropic.com</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="app-categories">
+                                <span class="app-category-tag">AI研究</span>
+                                <span class="app-category-tag">自然语言处理</span>
+                            </div>
+                        </td>
+                        <td>12,738</td>
+                        <td><span class="app-status status-inactive">已下线</span></td>
+                        <td>
+                            <div class="app-actions">
+                                <button class="app-action-btn view" title="查看">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="app-action-btn edit" title="编辑">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="app-action-btn delete" title="删除">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="app-item-info">
+                                <div class="app-item-icon" style="background-color: var(--warning-bg); color: var(--warning-dark);">
+                                    <i class="fas fa-paint-brush"></i>
+                                </div>
+                                <div>
+                                    <div class="app-item-name">Stable Diffusion</div>
+                                    <div class="app-item-url">https://stablediffusionweb.com</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="app-categories">
+                                <span class="app-category-tag">AI绘画</span>
+                                <span class="app-category-tag">图像生成</span>
+                            </div>
+                        </td>
+                        <td>10,532</td>
+                        <td><span class="app-status status-pending">待审核</span></td>
+                        <td>
+                            <div class="app-actions">
+                                <button class="app-action-btn view" title="查看">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="app-action-btn edit" title="编辑">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="app-action-btn delete" title="删除">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- 分页 -->
+        <div class="pagination">
+            <div class="pagination-info">显示 1-7，共 24 条</div>
+            <button class="pagination-btn disabled" title="上一页">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="pagination-btn active">1</button>
+            <button class="pagination-btn">2</button>
+            <button class="pagination-btn">3</button>
+            <button class="pagination-btn">4</button>
+            <button class="pagination-btn" title="下一页">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </main>
+    
+    <!-- 添加应用模态窗口 -->
+    <div class="modal" id="addAppModal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>添加应用</h2>
+                <button type="button" class="btn-close" id="closeAddAppModal">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addAppForm">
+                    <div class="form-group">
+                        <label for="appName">应用名称</label>
+                        <input type="text" id="appName" name="appName" required>
+                        <small>此名称将显示在应用卡片上</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="appDesc">应用描述</label>
+                        <input type="text" id="appDesc" name="appDesc" required>
+                        <small>简短描述将显示在应用卡片上</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="appFullDesc">完整描述</label>
+                        <textarea id="appFullDesc" name="appFullDesc" rows="3"></textarea>
+                        <small>完整描述将显示在重定向页面</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="appUrl">应用网址</label>
+                        <input type="url" id="appUrl" name="appUrl" required>
+                        <small>用户将被重定向到此URL</small>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="appIconUrl">图标URL</label>
+                            <input type="url" id="appIconUrl" name="appIconUrl" placeholder="https://example.com/icon.png">
+                            <small>应用图标的URL链接</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="appBgColor">卡片背景颜色</label>
+                            <input type="color" id="appBgColor" name="appBgColor" value="#242536">
+                            <small>应用卡片的背景颜色</small>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="appCategory">应用类别</label>
+                        <select id="appCategory" name="appCategory" required>
+                            <option value="">选择类别...</option>
+                            <option value="ai">AI工具</option>
+                            <option value="web3">Web3</option>
+                            <option value="dev">开发工具</option>
+                            <option value="learn">学习资源</option>
+                            <option value="tool">实用工具</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="appStatus">状态</label>
+                        <select id="appStatus" name="appStatus" required>
+                            <option value="active">启用</option>
+                            <option value="inactive">禁用</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>重定向链接预览</label>
+                        <div class="redirect-preview">
+                            <div class="redirect-url" id="redirectUrlPreview">https://example.com/redirect.html?name=应用名称&url=https://app-url.com&desc=应用描述&icon=icon-url&category=ai</div>
+                            <button type="button" class="btn btn-outline btn-sm" id="copyRedirectUrl">
+                                <i class="fa-solid fa-copy"></i> 复制
+                            </button>
+                        </div>
+                        <small>此链接可用于首页应用跳转</small>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">保存应用</button>
+                        <button type="button" class="btn btn-secondary" id="cancelAddApp">取消</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 侧边栏切换
+            document.getElementById('sidebarToggle').addEventListener('click', function() {
+                document.getElementById('sidebar').classList.toggle('expanded');
+            });
+            
+            // 移动端侧边栏适配
+            function handleResize() {
+                const sidebar = document.getElementById('sidebar');
+                const sidebarToggle = document.getElementById('sidebarToggle');
+                
+                if (window.innerWidth <= 992) {
+                    sidebarToggle.style.display = 'flex';
+                } else {
+                    sidebar.classList.remove('expanded');
+                    sidebarToggle.style.display = 'none';
+                }
+                
+                if (window.innerWidth <= 576) {
+                    sidebar.classList.remove('expanded');
+                }
+            }
+            
+            // 初始化
+            window.addEventListener('load', handleResize);
+            window.addEventListener('resize', handleResize);
+            
+            // 添加应用模态窗口控制
+            const addAppModal = document.getElementById('addAppModal');
+            const addAppBtn = document.getElementById('addAppBtn');
+            const closeAddAppModal = document.getElementById('closeAddAppModal');
+            const cancelAddApp = document.getElementById('cancelAddApp');
+            const addAppForm = document.getElementById('addAppForm');
+            
+            // 打开模态窗口
+            addAppBtn.addEventListener('click', function() {
+                addAppModal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            // 关闭模态窗口
+            function closeModal() {
+                addAppModal.classList.remove('show');
+                document.body.style.overflow = '';
+                addAppForm.reset();
+            }
+            
+            closeAddAppModal.addEventListener('click', closeModal);
+            cancelAddApp.addEventListener('click', closeModal);
+            
+            // 点击遮罩层关闭模态窗口
+            addAppModal.addEventListener('click', function(e) {
+                if (e.target === addAppModal.querySelector('.modal-overlay')) {
+                    closeModal();
+                }
+            });
+            
+            // 主分类和子分类数据
+            const categoryData = {
+                'ai': ['AI聊天', 'AI绘画', 'AI写作', 'AI语音', 'AI翻译', 'AI搜索', '其他'],
+                'web3': ['加密钱包', '交易所', 'NFT平台', 'DeFi应用', '数据工具', '元宇宙', '其他'],
+                'dev': ['代码编辑器', 'AI编程', '版本控制', 'API工具', '数据库工具', '开发框架', '其他'],
+                'learn': ['编程教程', 'AI学习', 'Web3课程', '数据科学', '在线学院', '其他'],
+                'tool': ['设计工具', '数据可视化', '协作工具', '生产力工具', '办公软件', '其他']
+            };
+            
+            // 更新重定向URL预览
+            function updateRedirectPreview() {
+                const name = encodeURIComponent(document.getElementById('appName').value || '应用名称');
+                const url = encodeURIComponent(document.getElementById('appUrl').value || 'https://app-url.com');
+                const desc = encodeURIComponent(document.getElementById('appDesc').value || '应用描述');
+                const icon = encodeURIComponent(document.getElementById('appIconUrl').value || 'icon-url');
+                const category = document.getElementById('appCategory').value || 'category';
+                
+                const redirectUrl = `https://example.com/redirect.html?name=${name}&url=${url}&desc=${desc}&icon=${icon}&category=${category}`;
+                document.getElementById('redirectUrlPreview').textContent = redirectUrl;
+            }
+            
+            // 监听表单输入变化，更新预览
+            const previewFields = ['appName', 'appUrl', 'appDesc', 'appIconUrl', 'appCategory'];
+            previewFields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                if (field) {
+                    field.addEventListener('input', updateRedirectPreview);
+                }
+            });
+            
+            // 复制重定向URL
+            const copyRedirectUrl = document.getElementById('copyRedirectUrl');
+            if (copyRedirectUrl) {
+                copyRedirectUrl.addEventListener('click', function() {
+                    const textToCopy = document.getElementById('redirectUrlPreview').textContent;
+                    navigator.clipboard.writeText(textToCopy).then(
+                        () => {
+                            // 复制成功，显示临时提示
+                            const originalText = this.innerHTML;
+                            this.innerHTML = '<i class="fa-solid fa-check"></i> 已复制';
+                            setTimeout(() => {
+                                this.innerHTML = originalText;
+                            }, 2000);
+                        }
+                    ).catch(err => {
+                        console.error('无法复制文本: ', err);
+                    });
+                });
+            }
+            
+            // 表单提交
+            if (addAppForm) {
+                addAppForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // 表单验证
+                    const requiredFields = this.querySelectorAll('[required]');
+                    let isValid = true;
+                    
+                    requiredFields.forEach(field => {
+                        if (!field.value.trim()) {
+                            isValid = false;
+                            field.classList.add('error');
+                            
+                            // 添加错误提示
+                            const errorMsg = field.parentNode.querySelector('.error-message');
+                            if (!errorMsg) {
+                                const msg = document.createElement('div');
+                                msg.className = 'error-message';
+                                msg.textContent = '此字段不能为空';
+                                field.parentNode.appendChild(msg);
+                            }
+                        } else {
+                            field.classList.remove('error');
+                            const errorMsg = field.parentNode.querySelector('.error-message');
+                            if (errorMsg) {
+                                errorMsg.remove();
+                            }
+                        }
+                    });
+                    
+                    if (!isValid) {
+                        return;
+                    }
+                    
+                    // 表单提交逻辑
+                    // ... (可以添加AJAX请求发送数据到服务器)
+                    
+                    // 模拟保存成功
+                    const successMsg = document.createElement('div');
+                    successMsg.className = 'message success visible';
+                    successMsg.innerHTML = '<i class="fas fa-check-circle"></i> 应用已成功添加！';
+                    addAppForm.appendChild(successMsg);
+                    
+                    setTimeout(() => {
+                        successMsg.remove();
+                        closeModal();
+                    }, 2000);
+                });
+            }
+            
+            // 添加错误样式
+            const style = document.createElement('style');
+            style.textContent = `
+                .error {
+                    border-color: var(--danger-color) !important;
+                }
+                .error-message {
+                    color: var(--danger-color);
+                    font-size: 0.75rem;
+                    margin-top: 0.3rem;
+                }
+                .success-message {
+                    background-color: var(--success-bg);
+                    color: var(--success-dark);
+                    padding: 0.75rem;
+                    border-radius: var(--border-radius-sm);
+                    margin-top: 1rem;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                }
+                .success-message i {
+                    color: var(--success-color);
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // 初始化重定向URL预览
+            updateRedirectPreview();
+        });
+    </script>
+</body>
+</html> 

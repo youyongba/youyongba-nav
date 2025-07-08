@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI与Web3应用导航 - 分类管理</title>
+    <!-- 引入Google字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- 引入Font Awesome图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* 结构色 */
+            --dark-color: #1a1a1a;
+            --dark-bg: #282d3e;
+            --darker-bg: #1f2333;
+            --text-color: #4d4d4d;
+            --text-light: #999999;
+            --border-color: #cccccc;
+            --bg-light: #f0f2f5;
+            --light-color: #ffffff;
+            
+            /* 品牌色 */
+            --primary-color: #e56045;
+            --secondary-color: #cc553d;
+            --light-primary: #ffb9b2;
+            
+            /* 指示器色 */
+            --info-color: #00aeef;
+            --info-light: #8bdfff;
+            --info-bg: rgba(0, 174, 239, 0.1);
+            --info-dark: #007ba9;
+            
+            --success-color: #53cfc8;
+            --success-light: #a1e5e2;
+            --success-bg: rgba(83, 207, 200, 0.1);
+            --success-dark: #609996;
+            
+            --warning-color: #f7941d;
+            --warning-light: #ffd199;
+            --warning-bg: rgba(247, 148, 29, 0.1);
+            --warning-dark: #cc7b18;
+            
+            --neutral-color: #736357;
+            
+            /* 其他 */
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* 侧边栏导航 */
+        .sidebar {
+            width: 260px;
+            background: var(--darker-bg);
+            color: white;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            overflow-y: auto;
+            transition: var(--transition);
+            z-index: 100;
+        }
+        
+        .sidebar-header {
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 0.4rem;
+        }
+        
+        .sidebar-logo i {
+            font-size: 1.8rem;
+            margin-right: 10px;
+            color: var(--primary-color);
+            flex-shrink: 0;
+        }
+        
+        .sidebar-logo h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            white-space: nowrap;
+            line-height: 1.2;
+        }
+        
+        .sidebar-subtitle {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            text-align: center;
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+        
+        .user-info {
+            flex: 1;
+            overflow: hidden;
+        }
+        
+        .user-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .user-role {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .nav-menu {
+            padding: 1rem 0;
+        }
+        
+        .nav-section {
+            margin-bottom: 1rem;
+        }
+        
+        .nav-section-title {
+            padding: 0.4rem 1.5rem;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            opacity: 0.5;
+            letter-spacing: 1px;
+        }
+        
+        .nav-item {
+            padding: 0.7rem 1.5rem;
+            display: flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+            margin: 0.15rem 0;
+        }
+        
+        .nav-item:hover, .nav-item.active {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: white;
+        }
+        
+        .nav-item.active {
+            border-left: 3px solid var(--primary-color);
+            background-color: var(--dark-bg);
+        }
+        
+        .nav-item i {
+            width: 20px;
+            text-align: center;
+            margin-right: 12px;
+            font-size: 1rem;
+        }
+        
+        .nav-item span {
+            flex: 1;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .sidebar-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            position: sticky;
+            bottom: 0;
+            background: inherit;
+        }
+        
+        .sidebar-toggle {
+            position: fixed;
+            left: 260px;
+            top: 15px;
+            background-color: white;
+            color: var(--text-color);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+            z-index: 99;
+            transition: var(--transition);
+        }
+        
+        /* 主内容区域 */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 1.5rem;
+            transition: var(--transition);
+        }
+        
+        /* 顶部栏 */
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.8rem;
+            background-color: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .page-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .search-box {
+            position: relative;
+            width: 280px;
+        }
+        
+        .search-box input {
+            padding: 8px 12px 8px 38px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-light);
+            font-size: 0.9rem;
+            width: 100%;
+            transition: var(--transition);
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background-color: white;
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+
+        /* 操作栏 */
+        .action-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+        
+        .action-btn {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-sm);
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .action-btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .action-btn i {
+            margin-right: 6px;
+        }
+
+        /* 分类管理样式 */
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .category-card {
+            background-color: white;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+        
+        .category-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-3px);
+        }
+        
+        .category-header {
+            padding: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--bg-light);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .category-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .category-title i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+        
+        .category-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .category-action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            background-color: white;
+            border: 1px solid var(--bg-light);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .category-action-btn:hover {
+            background-color: var(--bg-light);
+        }
+        
+        .category-action-btn.edit:hover {
+            color: var(--warning-dark);
+        }
+        
+        .category-action-btn.delete:hover {
+            color: var(--secondary-color);
+        }
+        
+        .category-body {
+            padding: 1.2rem;
+        }
+        
+        .category-info {
+            margin-bottom: 1rem;
+        }
+        
+        .category-stats {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+        
+        .category-stat {
+            display: flex;
+            align-items: center;
+        }
+        
+        .category-stat i {
+            margin-right: 5px;
+            font-size: 0.8rem;
+        }
+        
+        .category-description {
+            font-size: 0.9rem;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        
+        .category-apps {
+            background-color: var(--bg-light);
+            padding: 0.8rem;
+            border-radius: var(--radius-sm);
+        }
+        
+        .category-apps-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+        
+        .category-apps-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .category-app-tag {
+            padding: 0.3rem 0.6rem;
+            background-color: white;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+
+        /* 模态窗口样式 */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-backdrop.active {
+            display: flex;
+        }
+
+        .modal {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid var(--bg-light);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: var(--primary-color);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            background-color: white;
+            transition: var(--transition);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(229, 96, 69, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .icon-selector {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .icon-option {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            background-color: var(--bg-light);
+            color: var(--text-color);
+        }
+
+        .icon-option:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .icon-option.selected {
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 2px 8px rgba(229, 96, 69, 0.3);
+        }
+
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--bg-light);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.7rem 1.2rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-secondary {
+            background-color: var(--bg-light);
+            color: var(--text-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #e5e5e5;
+        }
+        
+        /* 响应式布局 */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 70px;
+                transform: translateX(0);
+            }
+            
+            .sidebar.expanded {
+                width: 260px;
+            }
+            
+            .sidebar:not(.expanded) .sidebar-logo h2, 
+            .sidebar:not(.expanded) .sidebar-subtitle,
+            .sidebar:not(.expanded) .user-info,
+            .sidebar:not(.expanded) .nav-section-title,
+            .sidebar:not(.expanded) .nav-item span {
+                display: none;
+            }
+            
+            .sidebar:not(.expanded) .sidebar-header,
+            .sidebar:not(.expanded) .user-profile,
+            .sidebar:not(.expanded) .nav-item {
+                text-align: center;
+                padding: 1rem;
+            }
+            
+            .sidebar:not(.expanded) .sidebar-logo,
+            .sidebar:not(.expanded) .nav-item {
+                justify-content: center;
+            }
+            
+            .sidebar:not(.expanded) .nav-item i {
+                margin-right: 0;
+            }
+            
+            .sidebar-toggle {
+                left: 70px;
+            }
+            
+            .sidebar.expanded .sidebar-toggle {
+                left: 260px;
+            }
+            
+            .main-content {
+                margin-left: 70px;
+            }
+            
+            .sidebar.expanded + .main-content {
+                margin-left: 260px;
+            }
+            
+            .category-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .search-box {
+                width: 100%;
+                margin-top: 1rem;
+            }
+            
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .sidebar {
+                transform: translateX(-100%);
+                z-index: 1000;
+            }
+            
+            .sidebar.expanded {
+                transform: translateX(0);
+                width: 260px;
+            }
+            
+            .sidebar-toggle {
+                left: 15px;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 0.8rem;
+            }
+        }
+        
+        /* 滚动条美化 */
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        /* 子分类导航样式 */
+        .nav-subsection {
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .nav-subsection .nav-item {
+            padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+            font-size: 0.85rem;
+            position: relative;
+        }
+        
+        .nav-subsection .nav-item:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 10px;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .nav-subsection .nav-item i {
+            font-size: 0.9rem;
+        }
+        
+        .nav-subsection .nav-item.active {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        /* 子分类卡片样式 */
+        .subcategory-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .subcategory-card {
+            background-color: white;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            text-decoration: none;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .subcategory-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .subcategory-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100px;
+            background-color: var(--bg-light);
+        }
+        
+        .subcategory-icon i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+        }
+        
+        .subcategory-info {
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .subcategory-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+        
+        .subcategory-count {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+        
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--dark-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        /* 子分类在响应式下的样式调整 */
+        @media (max-width: 992px) {
+            .sidebar:not(.expanded) .nav-subsection {
+                padding-left: 0;
+            }
+            
+            .sidebar:not(.expanded) .nav-subsection .nav-item {
+                padding: 0.8rem;
+            }
+            
+            .sidebar:not(.expanded) .nav-subsection .nav-item:before {
+                display: none;
+            }
+            
+            .subcategory-cards {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .subcategory-cards {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 侧边栏导航 -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-robot"></i>
+                <h2>AI与Web3导航</h2>
+            </div>
+            <div class="sidebar-subtitle">后台管理系统</div>
+        </div>
+        
+        <div class="user-profile">
+            <div class="user-avatar">A</div>
+            <div class="user-info">
+                <div class="user-name">管理员</div>
+                <div class="user-role">超级管理员</div>
+            </div>
+        </div>
+        
+        <nav class="nav-menu">
+            <div class="nav-section">
+                <div class="nav-section-title">主要功能</div>
+                <a href="admin_dashboard.html" class="nav-item">
+                    <i class="fas fa-home"></i>
+                    <span>仪表盘</span>
+                </a>
+                <a href="apps_management.html" class="nav-item">
+                    <i class="fas fa-shapes"></i>
+                    <span>应用管理</span>
+                </a>
+                <a href="category_management.html" class="nav-item active">
+                    <i class="fas fa-folder"></i>
+                    <span>分类管理</span>
+                </a>
+                
+                <!-- 子分类管理 -->
+                <div class="nav-subsection">
+                    <a href="subcategory_ai.html" class="nav-item">
+                        <i class="fas fa-robot"></i>
+                        <span>AI应用</span>
+                    </a>
+                    <a href="subcategory_web3.html" class="nav-item">
+                        <i class="fas fa-cube"></i>
+                        <span>Web3应用</span>
+                    </a>
+                    <a href="subcategory_dev.html" class="nav-item">
+                        <i class="fas fa-code"></i>
+                        <span>开发工具</span>
+                    </a>
+                    <a href="subcategory_learning.html" class="nav-item">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>学习资源</span>
+                    </a>
+                    <a href="subcategory_tools.html" class="nav-item">
+                        <i class="fas fa-tools"></i>
+                        <span>实用工具</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">系统设置</div>
+                <a href="system_settings.html" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>系统设置</span>
+                </a>
+                <a href="operation_logs.html" class="nav-item">
+                    <i class="fas fa-history"></i>
+                    <span>操作日志</span>
+                </a>
+            </div>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="admin_login.html" class="nav-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>退出登录</span>
+            </a>
+        </div>
+    </aside>
+    
+    <div class="sidebar-toggle" id="sidebarToggle">
+        <i class="fas fa-bars"></i>
+    </div>
+    
+    <!-- 主内容区域 -->
+    <main class="main-content">
+        <!-- 顶部栏 -->
+        <div class="topbar">
+            <h1 class="page-title">分类管理</h1>
+            
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="搜索分类...">
+            </div>
+        </div>
+        
+        <!-- 子分类入口区域 -->
+        <div class="section-title">
+            <i class="fas fa-th-large"></i>
+            子分类管理
+        </div>
+        
+        <div class="subcategory-cards">
+            <!-- AI应用子分类 -->
+            <a href="subcategory_ai.html" class="subcategory-card">
+                <div class="subcategory-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="subcategory-info">
+                    <div class="subcategory-title">AI应用</div>
+                    <div class="subcategory-count">24个应用</div>
+                </div>
+            </a>
+            
+            <!-- Web3应用子分类 -->
+            <a href="subcategory_web3.html" class="subcategory-card">
+                <div class="subcategory-icon">
+                    <i class="fas fa-cube"></i>
+                </div>
+                <div class="subcategory-info">
+                    <div class="subcategory-title">Web3应用</div>
+                    <div class="subcategory-count">15个应用</div>
+                </div>
+            </a>
+            
+            <!-- 开发工具子分类 -->
+            <a href="subcategory_dev.html" class="subcategory-card">
+                <div class="subcategory-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="subcategory-info">
+                    <div class="subcategory-title">开发工具</div>
+                    <div class="subcategory-count">12个应用</div>
+                </div>
+            </a>
+            
+            <!-- 学习资源子分类 -->
+            <a href="subcategory_learning.html" class="subcategory-card">
+                <div class="subcategory-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="subcategory-info">
+                    <div class="subcategory-title">学习资源</div>
+                    <div class="subcategory-count">8个应用</div>
+                </div>
+            </a>
+            
+            <!-- 实用工具子分类 -->
+            <a href="subcategory_tools.html" class="subcategory-card">
+                <div class="subcategory-icon">
+                    <i class="fas fa-tools"></i>
+                </div>
+                <div class="subcategory-info">
+                    <div class="subcategory-title">实用工具</div>
+                    <div class="subcategory-count">15个应用</div>
+                </div>
+            </a>
+        </div>
+        
+        <!-- 操作栏 -->
+        <div class="action-bar">
+            <div></div>
+            <button class="action-btn" id="addCategoryBtn">
+                <i class="fas fa-plus"></i> 添加分类
+            </button>
+        </div>
+        
+        <!-- 分类列表 -->
+        <div class="category-grid">
+            <!-- AI应用分类 -->
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-title">
+                        <i class="fas fa-robot"></i>
+                        <span>AI应用</span>
+                    </div>
+                    <div class="category-actions">
+                        <button class="category-action-btn edit" title="编辑">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="category-action-btn delete" title="删除">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="category-body">
+                    <div class="category-info">
+                        <div class="category-stats">
+                            <div class="category-stat">
+                                <i class="fas fa-shapes"></i>
+                                <span>24个应用</span>
+                            </div>
+                            <div class="category-stat">
+                                <i class="fas fa-eye"></i>
+                                <span>182,463次访问</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="category-description">
+                        包含各类人工智能应用，从聊天机器人到创作工具，帮助用户利用AI技术提高工作效率。
+                    </div>
+                    <div class="category-apps">
+                        <div class="category-apps-title">热门应用</div>
+                        <div class="category-apps-list">
+                            <div class="category-app-tag">ChatGPT</div>
+                            <div class="category-app-tag">Midjourney</div>
+                            <div class="category-app-tag">DALL-E 3</div>
+                            <div class="category-app-tag">Notion AI</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Web3应用分类 -->
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-title">
+                        <i class="fas fa-cube"></i>
+                        <span>Web3应用</span>
+                    </div>
+                    <div class="category-actions">
+                        <button class="category-action-btn edit" title="编辑">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="category-action-btn delete" title="删除">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="category-body">
+                    <div class="category-info">
+                        <div class="category-stats">
+                            <div class="category-stat">
+                                <i class="fas fa-shapes"></i>
+                                <span>15个应用</span>
+                            </div>
+                            <div class="category-stat">
+                                <i class="fas fa-eye"></i>
+                                <span>96,321次访问</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="category-description">
+                        基于区块链和去中心化技术的应用，包括加密钱包、DeFi应用、NFT平台等Web3相关产品。
+                    </div>
+                    <div class="category-apps">
+                        <div class="category-apps-title">热门应用</div>
+                        <div class="category-apps-list">
+                            <div class="category-app-tag">Uniswap</div>
+                            <div class="category-app-tag">OpenSea</div>
+                            <div class="category-app-tag">Aave</div>
+                            <div class="category-app-tag">Decentraland</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 开发工具分类 -->
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-title">
+                        <i class="fas fa-code"></i>
+                        <span>开发工具</span>
+                    </div>
+                    <div class="category-actions">
+                        <button class="category-action-btn edit" title="编辑">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="category-action-btn delete" title="删除">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="category-body">
+                    <div class="category-info">
+                        <div class="category-stats">
+                            <div class="category-stat">
+                                <i class="fas fa-shapes"></i>
+                                <span>12个应用</span>
+                            </div>
+                            <div class="category-stat">
+                                <i class="fas fa-eye"></i>
+                                <span>75,689次访问</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="category-description">
+                        为开发者提供编程辅助、代码生成和开发相关功能的应用工具，提升开发效率的AI和传统工具。
+                    </div>
+                    <div class="category-apps">
+                        <div class="category-apps-title">热门应用</div>
+                        <div class="category-apps-list">
+                            <div class="category-app-tag">Hugging Face</div>
+                            <div class="category-app-tag">Remix IDE</div>
+                            <div class="category-app-tag">TensorFlow</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 学习资源分类 -->
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-title">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>学习资源</span>
+                    </div>
+                    <div class="category-actions">
+                        <button class="category-action-btn edit" title="编辑">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="category-action-btn delete" title="删除">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="category-body">
+                    <div class="category-info">
+                        <div class="category-stats">
+                            <div class="category-stat">
+                                <i class="fas fa-shapes"></i>
+                                <span>8个应用</span>
+                            </div>
+                            <div class="category-stat">
+                                <i class="fas fa-eye"></i>
+                                <span>52,748次访问</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="category-description">
+                        提供人工智能和区块链技术的学习资源和教程平台，帮助用户掌握前沿技术知识。
+                    </div>
+                    <div class="category-apps">
+                        <div class="category-apps-title">热门应用</div>
+                        <div class="category-apps-list">
+                            <div class="category-app-tag">Deep Learning AI</div>
+                            <div class="category-app-tag">Cryptozombies</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 实用工具分类 -->
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-title">
+                        <i class="fas fa-tools"></i>
+                        <span>实用工具</span>
+                    </div>
+                    <div class="category-actions">
+                        <button class="category-action-btn edit" title="编辑">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="category-action-btn delete" title="删除">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="category-body">
+                    <div class="category-info">
+                        <div class="category-stats">
+                            <div class="category-stat">
+                                <i class="fas fa-shapes"></i>
+                                <span>15个应用</span>
+                            </div>
+                            <div class="category-stat">
+                                <i class="fas fa-eye"></i>
+                                <span>87,953次访问</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="category-description">
+                        各类提升生产力和工作效率的实用工具，包括设计工具、数据可视化工具和开发辅助工具等。
+                    </div>
+                    <div class="category-apps">
+                        <div class="category-apps-title">热门应用</div>
+                        <div class="category-apps-list">
+                            <div class="category-app-tag">VS Code</div>
+                            <div class="category-app-tag">Figma</div>
+                            <div class="category-app-tag">Notion</div>
+                            <div class="category-app-tag">Postman</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- 添加/编辑分类模态窗口 -->
+    <div class="modal-backdrop" id="categoryModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">添加分类</h3>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="categoryForm">
+                    <div class="form-group">
+                        <label class="form-label" for="categoryName">分类名称</label>
+                        <input type="text" id="categoryName" class="form-input" placeholder="请输入分类名称" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">分类图标</label>
+                        <div class="icon-selector">
+                            <div class="icon-option selected"><i class="fas fa-folder"></i></div>
+                            <div class="icon-option"><i class="fas fa-comment-alt"></i></div>
+                            <div class="icon-option"><i class="fas fa-paint-brush"></i></div>
+                            <div class="icon-option"><i class="fas fa-cube"></i></div>
+                            <div class="icon-option"><i class="fas fa-code"></i></div>
+                            <div class="icon-option"><i class="fas fa-file-alt"></i></div>
+                            <div class="icon-option"><i class="fas fa-brain"></i></div>
+                            <div class="icon-option"><i class="fas fa-robot"></i></div>
+                            <div class="icon-option"><i class="fas fa-microchip"></i></div>
+                            <div class="icon-option"><i class="fas fa-chart-bar"></i></div>
+                            <div class="icon-option"><i class="fas fa-database"></i></div>
+                            <div class="icon-option"><i class="fas fa-cogs"></i></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="categoryDesc">分类描述</label>
+                        <textarea id="categoryDesc" class="form-input form-textarea" placeholder="请输入分类描述"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="categorySort">排序</label>
+                        <input type="number" id="categorySort" class="form-input" placeholder="数字越小越靠前" min="0" value="0">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelBtn">取消</button>
+                <button class="btn btn-primary" id="submitBtn">保存</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 侧边栏切换
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('expanded');
+        });
+        
+        // 移动端侧边栏适配
+        function handleResize() {
+            const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            
+            if (window.innerWidth <= 992) {
+                sidebar.classList.add('expanded');
+                sidebarToggle.style.display = 'flex';
+            } else {
+                sidebar.classList.remove('expanded');
+                sidebarToggle.style.display = 'none';
+            }
+            
+            if (window.innerWidth <= 576) {
+                sidebar.classList.remove('expanded');
+            }
+        }
+        
+        // 初始化
+        window.addEventListener('load', handleResize);
+        window.addEventListener('resize', handleResize);
+        
+        // 模态窗口
+        const categoryModal = document.getElementById('categoryModal');
+        const addCategoryBtn = document.getElementById('addCategoryBtn');
+        const closeModal = document.getElementById('closeModal');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const modalTitle = document.getElementById('modalTitle');
+        const iconOptions = document.querySelectorAll('.icon-option');
+        const editButtons = document.querySelectorAll('.category-action-btn.edit');
+        const deleteButtons = document.querySelectorAll('.category-action-btn.delete');
+        
+        // 打开添加分类模态窗口
+        addCategoryBtn.addEventListener('click', function() {
+            modalTitle.textContent = '添加分类';
+            document.getElementById('categoryName').value = '';
+            document.getElementById('categoryDesc').value = '';
+            document.getElementById('categorySort').value = '0';
+            
+            // 重置图标选择
+            iconOptions.forEach(opt => opt.classList.remove('selected'));
+            iconOptions[0].classList.add('selected');
+            
+            categoryModal.classList.add('active');
+        });
+        
+        // 打开编辑分类模态窗口
+        editButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const card = this.closest('.category-card');
+                const title = card.querySelector('.category-title span').textContent;
+                const desc = card.querySelector('.category-description').textContent.trim();
+                const icon = card.querySelector('.category-title i').className.split(' ')[1];
+                
+                modalTitle.textContent = '编辑分类';
+                document.getElementById('categoryName').value = title;
+                document.getElementById('categoryDesc').value = desc;
+                
+                // 选择对应的图标
+                iconOptions.forEach(opt => {
+                    opt.classList.remove('selected');
+                    if (opt.querySelector('i').className.includes(icon)) {
+                        opt.classList.add('selected');
+                    }
+                });
+                
+                categoryModal.classList.add('active');
+            });
+        });
+        
+        // 关闭模态窗口
+        function closeModalWindow() {
+            categoryModal.classList.remove('active');
+        }
+        
+        closeModal.addEventListener('click', closeModalWindow);
+        cancelBtn.addEventListener('click', closeModalWindow);
+        
+        // 点击模态窗口外部关闭
+        categoryModal.addEventListener('click', function(e) {
+            if (e.target === categoryModal) {
+                closeModalWindow();
+            }
+        });
+        
+        // 选择图标
+        iconOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                iconOptions.forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+        
+        // 删除分类确认
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const card = this.closest('.category-card');
+                const title = card.querySelector('.category-title span').textContent;
+                
+                if (confirm(`确定要删除"${title}"分类吗？该操作不可恢复！`)) {
+                    // 这里可以添加删除请求逻辑
+                    card.remove();
+                }
+            });
+        });
+        
+        // 表单提交
+        submitBtn.addEventListener('click', function() {
+            // 获取表单数据
+            const name = document.getElementById('categoryName').value;
+            const desc = document.getElementById('categoryDesc').value;
+            const sort = document.getElementById('categorySort').value;
+            const icon = document.querySelector('.icon-option.selected i').className;
+            
+            if (!name) {
+                alert('请输入分类名称');
+                return;
+            }
+            
+            // 模拟保存成功
+            alert('分类保存成功！');
+            closeModalWindow();
+            
+            // 在实际应用中，这里应该添加表单提交到服务器的逻辑
+            // 成功后可以刷新页面或者动态更新分类列表
+        });
+    </script>
+</body>
+</html> 

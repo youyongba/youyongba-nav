@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI与Web3应用导航 - 操作日志</title>
+    <!-- 引入Google字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- 引入Font Awesome图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* 结构色 */
+            --dark-color: #1a1a1a;
+            --dark-bg: #282d3e;
+            --darker-bg: #1f2333;
+            --text-color: #4d4d4d;
+            --text-light: #999999;
+            --border-color: #cccccc;
+            --bg-light: #f0f2f5;
+            --light-color: #ffffff;
+            
+            /* 品牌色 */
+            --primary-color: #e56045;
+            --secondary-color: #cc553d;
+            --light-primary: #ffb9b2;
+            
+            /* 指示器色 */
+            --info-color: #00aeef;
+            --info-light: #8bdfff;
+            --info-bg: rgba(0, 174, 239, 0.1);
+            --info-dark: #007ba9;
+            
+            --success-color: #53cfc8;
+            --success-light: #a1e5e2;
+            --success-bg: rgba(83, 207, 200, 0.1);
+            --success-dark: #609996;
+            
+            --warning-color: #f7941d;
+            --warning-light: #ffd199;
+            --warning-bg: rgba(247, 148, 29, 0.1);
+            --warning-dark: #cc7b18;
+            
+            --danger-color: #f44336;
+            --danger-light: #ffcdd2;
+            --danger-bg: rgba(244, 67, 54, 0.1);
+            --danger-dark: #d32f2f;
+            
+            --neutral-color: #736357;
+            
+            /* 其他 */
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* 侧边栏导航 */
+        .sidebar {
+            width: 260px;
+            background: var(--darker-bg);
+            color: white;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            overflow-y: auto;
+            transition: var(--transition);
+            z-index: 100;
+        }
+        
+        .sidebar-header {
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 0.4rem;
+        }
+        
+        .sidebar-logo i {
+            font-size: 1.8rem;
+            margin-right: 10px;
+            color: var(--primary-color);
+            flex-shrink: 0;
+        }
+        
+        .sidebar-logo h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            white-space: nowrap;
+            line-height: 1.2;
+        }
+        
+        .sidebar-subtitle {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            text-align: center;
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+        
+        .user-info {
+            flex: 1;
+            overflow: hidden;
+        }
+        
+        .user-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .user-role {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .nav-menu {
+            padding: 1rem 0;
+        }
+        
+        .nav-section {
+            margin-bottom: 1rem;
+        }
+        
+        .nav-section-title {
+            padding: 0.4rem 1.5rem;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            opacity: 0.5;
+            letter-spacing: 1px;
+        }
+        
+        .nav-item {
+            padding: 0.7rem 1.5rem;
+            display: flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+            margin: 0.15rem 0;
+        }
+        
+        .nav-item:hover, .nav-item.active {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: white;
+        }
+        
+        .nav-item.active {
+            border-left: 3px solid var(--primary-color);
+            background-color: var(--dark-bg);
+        }
+        
+        .nav-item i {
+            width: 20px;
+            text-align: center;
+            margin-right: 12px;
+            font-size: 1rem;
+        }
+        
+        .nav-item span {
+            flex: 1;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .sidebar-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            position: sticky;
+            bottom: 0;
+            background: inherit;
+        }
+        
+        .sidebar-toggle {
+            position: fixed;
+            left: 260px;
+            top: 15px;
+            background-color: white;
+            color: var(--text-color);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+            z-index: 99;
+            transition: var(--transition);
+        }
+        
+        /* 主内容区域 */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 1.5rem;
+            transition: var(--transition);
+        }
+        
+        /* 顶部栏 */
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.8rem;
+            background-color: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .page-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        /* 筛选栏样式 */
+        .filter-bar {
+            background-color: white;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 1.5rem;
+            padding: 1.2rem 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+        
+        .filter-group {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+        }
+        
+        .filter-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            white-space: nowrap;
+        }
+        
+        .filter-select {
+            min-width: 120px;
+            padding: 0.5rem 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            color: var(--text-color);
+            background-color: white;
+            cursor: pointer;
+            transition: var(--transition);
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='4' viewBox='0 0 8 4'%3E%3Cpath fill='%23999' d='M0 0h8L4 4z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.8rem center;
+            padding-right: 2rem;
+        }
+        
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .filter-date {
+            min-width: 145px;
+            padding: 0.5rem 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            color: var(--text-color);
+            background-color: white;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .filter-date:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 0.5rem 0.8rem 0.5rem 2.2rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            color: var(--text-color);
+            background-color: var(--bg-light);
+            transition: var(--transition);
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background-color: white;
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 0.8rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-weight: 500;
+            background-color: var(--primary-color);
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        
+        .filter-btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .filter-btn.secondary {
+            background-color: var(--bg-light);
+            color: var(--text-color);
+        }
+        
+        .filter-btn.secondary:hover {
+            background-color: #e5e5e5;
+        }
+        
+        /* 表格样式 */
+        .log-table-container {
+            background-color: white;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+        
+        .log-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .log-table th,
+        .log-table td {
+            padding: 1rem 1.2rem;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+        
+        .log-table th {
+            background-color: var(--bg-light);
+            font-weight: 600;
+            color: var(--dark-color);
+            white-space: nowrap;
+            position: relative;
+        }
+        
+        .log-table th:after {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 20%;
+            height: 60%;
+            width: 1px;
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        .log-table th:last-child:after {
+            display: none;
+        }
+        
+        .log-table tr {
+            border-bottom: 1px solid var(--bg-light);
+        }
+        
+        .log-table tr:last-child {
+            border-bottom: none;
+        }
+        
+        .log-table tbody tr:hover {
+            background-color: rgba(0, 0, 0, 0.01);
+        }
+        
+        .log-time {
+            color: var(--text-light);
+            white-space: nowrap;
+        }
+        
+        .log-user {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .log-user-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background-color: var(--info-bg);
+            color: var(--info-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .log-type {
+            font-weight: 500;
+        }
+        
+        .log-type.login {
+            color: var(--info-color);
+        }
+        
+        .log-type.create {
+            color: var(--success-color);
+        }
+        
+        .log-type.update {
+            color: var(--warning-color);
+        }
+        
+        .log-type.delete {
+            color: var(--danger-color);
+        }
+        
+        .log-content {
+            font-size: 0.9rem;
+            max-width: 350px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .log-ip {
+            font-family: monospace;
+            color: var(--text-light);
+        }
+        
+        .log-action {
+            white-space: nowrap;
+            text-align: right;
+        }
+        
+        .log-btn {
+            padding: 0.3rem 0.6rem;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            background-color: var(--bg-light);
+            color: var(--text-color);
+            cursor: pointer;
+            transition: var(--transition);
+            margin-left: 0.3rem;
+        }
+        
+        .log-btn:hover {
+            background-color: #e5e5e5;
+        }
+        
+        .log-btn.details {
+            background-color: var(--info-bg);
+            color: var(--info-color);
+        }
+        
+        .log-btn.details:hover {
+            background-color: var(--info-light);
+        }
+        
+        /* 表格分页样式 */
+        .pagination-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.2rem;
+            background-color: var(--bg-light);
+            border-top: 1px solid rgba(0, 0, 0, 0.04);
+        }
+        
+        .pagination-info {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+        
+        .pagination {
+            display: flex;
+            gap: 0.3rem;
+        }
+        
+        .page-item {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            background-color: white;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .page-item:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .page-item.active {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+        
+        .page-item.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        /* 操作栏 */
+        .action-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+        
+        .left-actions,
+        .right-actions {
+            display: flex;
+            gap: 0.8rem;
+        }
+        
+        .action-btn {
+            display: flex;
+            align-items: center;
+            padding: 0.6rem 1rem;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .action-btn i {
+            margin-right: 0.5rem;
+        }
+        
+        .action-btn.primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .action-btn.primary:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .action-btn.secondary {
+            background-color: var(--bg-light);
+            color: var(--text-color);
+        }
+        
+        .action-btn.secondary:hover {
+            background-color: #e5e5e5;
+        }
+        
+        .action-btn.danger {
+            background-color: var(--danger-bg);
+            color: var(--danger-color);
+        }
+        
+        .action-btn.danger:hover {
+            background-color: var(--danger-light);
+        }
+        
+        /* 响应式布局 */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 70px;
+                transform: translateX(0);
+            }
+            
+            .sidebar.expanded {
+                width: 260px;
+            }
+            
+            .sidebar:not(.expanded) .sidebar-logo h2, 
+            .sidebar:not(.expanded) .sidebar-subtitle,
+            .sidebar:not(.expanded) .user-info,
+            .sidebar:not(.expanded) .nav-section-title,
+            .sidebar:not(.expanded) .nav-item span {
+                display: none;
+            }
+            
+            .sidebar:not(.expanded) .sidebar-header,
+            .sidebar:not(.expanded) .user-profile,
+            .sidebar:not(.expanded) .nav-item {
+                text-align: center;
+                padding: 1rem;
+            }
+            
+            .sidebar:not(.expanded) .sidebar-logo,
+            .sidebar:not(.expanded) .nav-item {
+                justify-content: center;
+            }
+            
+            .sidebar:not(.expanded) .nav-item i {
+                margin-right: 0;
+            }
+            
+            .sidebar-toggle {
+                left: 70px;
+            }
+            
+            .sidebar.expanded .sidebar-toggle {
+                left: 260px;
+            }
+            
+            .main-content {
+                margin-left: 70px;
+            }
+            
+            .sidebar.expanded + .main-content {
+                margin-left: 260px;
+            }
+            
+            .log-table-container {
+                overflow-x: auto;
+            }
+            
+            .filter-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filter-group {
+                justify-content: space-between;
+            }
+            
+            .search-box {
+                width: 100%;
+            }
+            
+            .action-bar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .right-actions {
+                justify-content: flex-start;
+            }
+            
+            .sidebar:not(.expanded) .nav-subsection {
+                padding-left: 0;
+            }
+            
+            .sidebar:not(.expanded) .nav-subsection .nav-item {
+                padding: 0.8rem;
+            }
+            
+            .sidebar:not(.expanded) .nav-subsection .nav-item:before {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .log-content {
+                max-width: 200px;
+            }
+            
+            .filter-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .pagination-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .sidebar {
+                transform: translateX(-100%);
+                z-index: 1000;
+            }
+            
+            .sidebar.expanded {
+                transform: translateX(0);
+                width: 260px;
+            }
+            
+            .sidebar-toggle {
+                left: 15px;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 0.8rem;
+            }
+            
+            .log-action {
+                display: flex;
+                flex-direction: column;
+                gap: 0.3rem;
+            }
+            
+            .log-btn {
+                margin-left: 0;
+            }
+            
+            .pagination {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+        
+        /* 滚动条美化 */
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.15);
+        }
+        
+        /* 子分类导航样式 */
+        .nav-subsection {
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .nav-subsection .nav-item {
+            padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+            font-size: 0.85rem;
+            position: relative;
+        }
+        
+        .nav-subsection .nav-item:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 10px;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .nav-subsection .nav-item i {
+            font-size: 0.9rem;
+        }
+        
+        .nav-subsection .nav-item.active {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body>
+    <!-- 侧边栏导航 -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-robot"></i>
+                <h2>AI与Web3导航</h2>
+            </div>
+            <div class="sidebar-subtitle">后台管理系统</div>
+        </div>
+        
+        <div class="user-profile">
+            <div class="user-avatar">A</div>
+            <div class="user-info">
+                <div class="user-name">管理员</div>
+                <div class="user-role">超级管理员</div>
+            </div>
+        </div>
+        
+        <nav class="nav-menu">
+            <div class="nav-section">
+                <div class="nav-section-title">主要功能</div>
+                <a href="admin_dashboard.html" class="nav-item">
+                    <i class="fas fa-home"></i>
+                    <span>仪表盘</span>
+                </a>
+                <a href="apps_management.html" class="nav-item">
+                    <i class="fas fa-shapes"></i>
+                    <span>应用管理</span>
+                </a>
+                <a href="category_management.html" class="nav-item">
+                    <i class="fas fa-folder"></i>
+                    <span>分类管理</span>
+                </a>
+                
+                <!-- 子分类管理 -->
+                <div class="nav-subsection">
+                    <a href="subcategory_text.html" class="nav-item">
+                        <i class="fas fa-file-alt"></i>
+                        <span>文本生成</span>
+                    </a>
+                    <a href="subcategory_image.html" class="nav-item">
+                        <i class="fas fa-image"></i>
+                        <span>图像生成</span>
+                    </a>
+                    <a href="subcategory_audio.html" class="nav-item">
+                        <i class="fas fa-music"></i>
+                        <span>音频处理</span>
+                    </a>
+                    <a href="subcategory_video.html" class="nav-item">
+                        <i class="fas fa-video"></i>
+                        <span>视频制作</span>
+                    </a>
+                    <a href="subcategory_assistant.html" class="nav-item">
+                        <i class="fas fa-robot"></i>
+                        <span>助手</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">系统设置</div>
+                <a href="system_settings.html" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>系统设置</span>
+                </a>
+                <a href="operation_logs.html" class="nav-item active">
+                    <i class="fas fa-history"></i>
+                    <span>操作日志</span>
+                </a>
+            </div>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="admin_login.html" class="nav-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>退出登录</span>
+            </a>
+        </div>
+    </aside>
+    
+    <div class="sidebar-toggle" id="sidebarToggle">
+        <i class="fas fa-bars"></i>
+    </div>
+    
+    <!-- 主内容区域 -->
+    <main class="main-content">
+        <!-- 顶部栏 -->
+        <div class="topbar">
+            <h1 class="page-title">操作日志</h1>
+        </div>
+        
+        <!-- 操作栏 -->
+        <div class="action-bar">
+            <div class="left-actions">
+                <button class="action-btn secondary">
+                    <i class="fas fa-sync-alt"></i>刷新
+                </button>
+            </div>
+            <div class="right-actions">
+                <button class="action-btn secondary">
+                    <i class="fas fa-download"></i>导出日志
+                </button>
+                <button class="action-btn danger">
+                    <i class="fas fa-trash-alt"></i>清空日志
+                </button>
+            </div>
+        </div>
+        
+        <!-- 筛选栏 -->
+        <div class="filter-bar">
+            <div class="filter-group">
+                <div class="filter-label">操作类型</div>
+                <select class="filter-select">
+                    <option value="">所有类型</option>
+                    <option value="login">登录操作</option>
+                    <option value="create">创建操作</option>
+                    <option value="update">更新操作</option>
+                    <option value="delete">删除操作</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <div class="filter-label">操作人员</div>
+                <select class="filter-select">
+                    <option value="">所有人员</option>
+                    <option value="admin">超级管理员</option>
+                    <option value="editor">内容编辑</option>
+                    <option value="operator">运营人员</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <div class="filter-label">开始日期</div>
+                <input type="date" class="filter-date">
+            </div>
+            
+            <div class="filter-group">
+                <div class="filter-label">结束日期</div>
+                <input type="date" class="filter-date">
+            </div>
+            
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="搜索操作内容...">
+            </div>
+            
+            <button class="filter-btn">查询</button>
+            <button class="filter-btn secondary">重置</button>
+        </div>
+        
+        <!-- 日志表格 -->
+        <div class="log-table-container">
+            <table class="log-table">
+                <thead>
+                    <tr>
+                        <th>操作时间</th>
+                        <th>操作人员</th>
+                        <th>操作类型</th>
+                        <th>操作内容</th>
+                        <th>IP地址</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 登录操作日志 -->
+                    <tr>
+                        <td class="log-time">2023-06-15 14:30:22</td>
+                        <td>
+                            <div class="log-user">
+                                <div class="log-user-avatar">A</div>
+                                <span>管理员</span>
+                            </div>
+                        </td>
+                        <td><span class="log-type login">登录操作</span></td>
+                        <td class="log-content">管理员成功登录系统</td>
+                        <td class="log-ip">192.168.1.100</td>
+                        <td class="log-action">
+                            <button class="log-btn details">详情</button>
+                        </td>
+                    </tr>
+                    
+                    <!-- 应用创建日志 -->
+                    <tr>
+                        <td class="log-time">2023-06-15 13:45:18</td>
+                        <td>
+                            <div class="log-user">
+                                <div class="log-user-avatar">A</div>
+                                <span>管理员</span>
+                            </div>
+                        </td>
+                        <td><span class="log-type create">创建操作</span></td>
+                        <td class="log-content">创建新应用：ChatGPT插件</td>
+                        <td class="log-ip">192.168.1.100</td>
+                        <td class="log-action">
+                            <button class="log-btn details">详情</button>
+                        </td>
+                    </tr>
+                    
+                    <!-- 应用更新日志 -->
+                    <tr>
+                        <td class="log-time">2023-06-15 11:23:05</td>
+                        <td>
+                            <div class="log-user">
+                                <div class="log-user-avatar">E</div>
+                                <span>编辑员</span>
+                            </div>
+                        </td>
+                        <td><span class="log-type update">更新操作</span></td>
+                        <td class="log-content">更新应用信息：Midjourney - 修改描述和图标</td>
+                        <td class="log-ip">192.168.1.101</td>
+                        <td class="log-action">
+                            <button class="log-btn details">详情</button>
+                        </td>
+                    </tr>
+                    
+                    <!-- 分类删除日志 -->
+                    <tr>
+                        <td class="log-time">2023-06-15 10:17:56</td>
+                        <td>
+                            <div class="log-user">
+                                <div class="log-user-avatar">A</div>
+                                <span>管理员</span>
+                            </div>
+                        </td>
+                        <td><span class="log-type delete">删除操作</span></td>
+                        <td class="log-content">删除分类：测试分类</td>
+                        <td class="log-ip">192.168.1.100</td>
+                        <td class="log-action">
+                            <button class="log-btn details">详情</button>
+                        </td>
+                    </tr>
+                    
+                    <!-- 设置更新日志 -->
+                    <tr>
+                        <td class="log-time">2023-06-14 16:42:31</td>
+                        <td>
+                            <div class="log-user">
+                                <div class="log-user-avatar">A</div>
+                                <span>管理员</span>
+                            </div>
+                        </td>
+                        <td><span class="log-type update">更新操作</span></td>
+                        <td class="log-content">更新系统设置：修改网站名称和主题色</td>
+                        <td class="log-ip">192.168.1.100</td>
+                        <td class="log-action">
+                            <button class="log-btn details">详情</button>
+                        </td>
+                    </tr>
+                    
+                    <!-- 登录操作日志 -->
+                    <tr>
+                        <td class="log-time">2023-06-14 09:05:47</td>
+                        <td>
+                            <div class="log-user">
+                                <div class="log-user-avatar">E</div>
+                                <span>编辑员</span>
+                            </div>
+                        </td>
+                        <td><span class="log-type login">登录操作</span></td>
+                        <td class="log-content">编辑员成功登录系统</td>
+                        <td class="log-ip">192.168.1.101</td>
+                        <td class="log-action">
+                            <button class="log-btn details">详情</button>
+                        </td>
+                    </tr>
+                    
+                    <!-- 应用创建日志 -->
+                    <tr>
+                        <td class="log-time">2023-06-13 15:36:22</td>
+                        <td>
+                            <div class="log-user">
+                                <div class="log-user-avatar">E</div>
+                                <span>编辑员</span>
+                            </div>
+                        </td>
+                        <td><span class="log-type create">创建操作</span></td>
+                        <td class="log-content">创建新应用：DALL-E 2 AI绘画工具</td>
+                        <td class="log-ip">192.168.1.101</td>
+                        <td class="log-action">
+                            <button class="log-btn details">详情</button>
+                        </td>
+                    </tr>
+                    
+                    <!-- 分类更新日志 -->
+                    <tr>
+                        <td class="log-time">2023-06-13 14:22:10</td>
+                        <td>
+                            <div class="log-user">
+                                <div class="log-user-avatar">A</div>
+                                <span>管理员</span>
+                            </div>
+                        </td>
+                        <td><span class="log-type update">更新操作</span></td>
+                        <td class="log-content">更新分类：AI绘画 - 添加新图标和描述</td>
+                        <td class="log-ip">192.168.1.100</td>
+                        <td class="log-action">
+                            <button class="log-btn details">详情</button>
+                        </td>
+                    </tr>
+                    
+                    <!-- 应用删除日志 -->
+                    <tr>
+                        <td class="log-time">2023-06-13 11:05:33</td>
+                        <td>
+                            <div class="log-user">
+                                <div class="log-user-avatar">A</div>
+                                <span>管理员</span>
+                            </div>
+                        </td>
+                        <td><span class="log-type delete">删除操作</span></td>
+                        <td class="log-content">删除应用：测试应用</td>
+                        <td class="log-ip">192.168.1.100</td>
+                        <td class="log-action">
+                            <button class="log-btn details">详情</button>
+                        </td>
+                    </tr>
+                    
+                    <!-- 登录操作日志 -->
+                    <tr>
+                        <td class="log-time">2023-06-13 09:01:25</td>
+                        <td>
+                            <div class="log-user">
+                                <div class="log-user-avatar">A</div>
+                                <span>管理员</span>
+                            </div>
+                        </td>
+                        <td><span class="log-type login">登录操作</span></td>
+                        <td class="log-content">管理员成功登录系统</td>
+                        <td class="log-ip">192.168.1.100</td>
+                        <td class="log-action">
+                            <button class="log-btn details">详情</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <!-- 分页 -->
+            <div class="pagination-container">
+                <div class="pagination-info">
+                    显示 1 到 10 条，共 48 条记录
+                </div>
+                <div class="pagination">
+                    <div class="page-item disabled">
+                        <i class="fas fa-angle-double-left"></i>
+                    </div>
+                    <div class="page-item disabled">
+                        <i class="fas fa-angle-left"></i>
+                    </div>
+                    <div class="page-item active">1</div>
+                    <div class="page-item">2</div>
+                    <div class="page-item">3</div>
+                    <div class="page-item">4</div>
+                    <div class="page-item">5</div>
+                    <div class="page-item">
+                        <i class="fas fa-angle-right"></i>
+                    </div>
+                    <div class="page-item">
+                        <i class="fas fa-angle-double-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        // 侧边栏切换
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('expanded');
+        });
+        
+        // 移动端侧边栏适配
+        function handleResize() {
+            const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            
+            if (window.innerWidth <= 992) {
+                sidebar.classList.add('expanded');
+                sidebarToggle.style.display = 'flex';
+            } else {
+                sidebar.classList.remove('expanded');
+                sidebarToggle.style.display = 'none';
+            }
+            
+            if (window.innerWidth <= 576) {
+                sidebar.classList.remove('expanded');
+            }
+        }
+        
+        // 分页点击事件
+        const pageItems = document.querySelectorAll('.page-item:not(.disabled)');
+        pageItems.forEach(item => {
+            item.addEventListener('click', function() {
+                pageItems.forEach(pageItem => pageItem.classList.remove('active'));
+                if (!this.classList.contains('disabled')) {
+                    this.classList.add('active');
+                }
+            });
+        });
+        
+        // 详情按钮点击事件
+        const detailButtons = document.querySelectorAll('.log-btn.details');
+        detailButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const row = this.closest('tr');
+                const time = row.querySelector('.log-time').textContent;
+                const user = row.querySelector('.log-user span').textContent;
+                const type = row.querySelector('.log-type').textContent;
+                const content = row.querySelector('.log-content').textContent;
+                
+                alert(`操作详情:
+时间: ${time}
+用户: ${user}
+类型: ${type}
+内容: ${content}`);
+            });
+        });
+        
+        // 初始化
+        window.addEventListener('load', handleResize);
+        window.addEventListener('resize', handleResize);
+    </script>
+</body>
+</html> 

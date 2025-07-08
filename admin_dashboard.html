@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI与Web3应用导航 - 后台管理</title>
+    <!-- 引入Google字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- 引入Font Awesome图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* 结构色 */
+            --dark-color: #1a1a1a;
+            --dark-bg: #282d3e;
+            --darker-bg: #1f2333;
+            --text-color: #4d4d4d;
+            --text-light: #999999;
+            --border-color: #cccccc;
+            --bg-light: #f0f2f5;
+            --light-color: #ffffff;
+            
+            /* 品牌色 */
+            --primary-color: #e56045;
+            --secondary-color: #cc553d;
+            --light-primary: #ffb9b2;
+            
+            /* 指示器色 */
+            --info-color: #00aeef;
+            --info-light: #8bdfff;
+            --info-bg: rgba(0, 174, 239, 0.1);
+            --info-dark: #007ba9;
+            
+            --success-color: #53cfc8;
+            --success-light: #a1e5e2;
+            --success-bg: rgba(83, 207, 200, 0.1);
+            --success-dark: #609996;
+            
+            --warning-color: #f7941d;
+            --warning-light: #ffd199;
+            --warning-bg: rgba(247, 148, 29, 0.1);
+            --warning-dark: #cc7b18;
+            
+            --neutral-color: #736357;
+            
+            /* 其他 */
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* 侧边栏导航 */
+        .sidebar {
+            width: 260px;
+            background: var(--darker-bg);
+            color: white;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            overflow-y: auto;
+            transition: var(--transition);
+            z-index: 100;
+        }
+        
+        .sidebar-header {
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 0.4rem;
+        }
+        
+        .sidebar-logo i {
+            font-size: 1.8rem;
+            margin-right: 10px;
+            color: var(--primary-color);
+            flex-shrink: 0;
+        }
+        
+        .sidebar-logo h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            white-space: nowrap;
+            line-height: 1.2;
+        }
+        
+        .sidebar-subtitle {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            text-align: center;
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+        
+        .user-info {
+            flex: 1;
+            overflow: hidden;
+        }
+        
+        .user-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .user-role {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .nav-menu {
+            padding: 1rem 0;
+        }
+        
+        .nav-section {
+            margin-bottom: 1rem;
+        }
+        
+        .nav-section-title {
+            padding: 0.4rem 1.5rem;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            opacity: 0.5;
+            letter-spacing: 1px;
+        }
+        
+        .nav-item {
+            padding: 0.7rem 1.5rem;
+            display: flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+            margin: 0.15rem 0;
+        }
+        
+        .nav-item:hover, .nav-item.active {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: white;
+        }
+        
+        .nav-item.active {
+            border-left: 3px solid var(--primary-color);
+            background-color: var(--dark-bg);
+        }
+        
+        .nav-item i {
+            width: 20px;
+            text-align: center;
+            margin-right: 12px;
+            font-size: 1rem;
+        }
+        
+        .nav-item span {
+            flex: 1;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .sidebar-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            position: sticky;
+            bottom: 0;
+            background: inherit;
+        }
+        
+        .sidebar-toggle {
+            position: fixed;
+            left: 260px;
+            top: 15px;
+            background-color: white;
+            color: var(--text-color);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+            z-index: 99;
+            transition: var(--transition);
+        }
+        
+        /* 主内容区域 */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 1.2rem 1.5rem;
+            transition: var(--transition);
+        }
+        
+        /* 顶部栏 */
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            background-color: white;
+            padding: 0.8rem 1.2rem;
+            border-radius: 10px;
+            box-shadow: 0 1px 8px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+        
+        .page-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .search-box {
+            position: relative;
+            width: 280px;
+        }
+        
+        .search-box input {
+            padding: 8px 12px 8px 38px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-light);
+            font-size: 0.9rem;
+            width: 100%;
+            transition: var(--transition);
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background-color: white;
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+        
+        /* 仪表盘卡片 */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .dash-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 8px rgba(0, 0, 0, 0.03);
+            padding: 20px;
+            position: relative;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+        
+        .dash-card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+            font-size: 1.2rem;
+        }
+        
+        .dash-card-value {
+            font-size: 1.8rem;
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 4px;
+            color: #333;
+            white-space: nowrap;
+        }
+        
+        .dash-card-label {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 14px;
+            white-space: nowrap;
+        }
+        
+        .dash-card-change {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 100px;
+            font-weight: 400;
+            white-space: nowrap;
+        }
+        
+        .change-up {
+            color: #3d9a68;
+            background-color: #ddefe3;
+        }
+        
+        .change-down {
+            color: #e45f5e;
+            background-color: #fce3e3;
+        }
+        
+        .dash-card-change i {
+            margin-right: 3px;
+            font-size: 0.7rem;
+        }
+        
+        /* 热门应用面板 */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            padding-left: 0.5rem;
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .apps-panel {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 8px rgba(0, 0, 0, 0.03);
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+        
+        .app-list {
+            list-style: none;
+        }
+        
+        .app-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            border-bottom: 1px solid var(--bg-light);
+            margin-bottom: 0.2rem;
+        }
+        
+        .app-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        
+        .app-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .app-info {
+            flex: 1;
+            margin-right: 1rem;
+        }
+        
+        .app-name {
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+            color: var(--dark-color);
+        }
+        
+        .app-category {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .app-category span {
+            margin-right: 0.5rem;
+            margin-bottom: 0.2rem;
+            padding: 2px 8px;
+            background-color: var(--bg-light);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+        
+        .app-actions {
+            display: flex;
+        }
+        
+        .app-action {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+            margin-left: 5px;
+            cursor: pointer;
+        }
+        
+        .app-action:hover {
+            background-color: var(--bg-light);
+            color: var(--dark-color);
+        }
+        
+        .app-action.edit:hover {
+            color: var(--warning-dark);
+        }
+        
+        .app-action.delete:hover {
+            color: var(--secondary-color);
+        }
+        
+        /* 响应式布局 */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 70px;
+                transform: translateX(0);
+            }
+            
+            .sidebar.expanded {
+                width: 260px;
+            }
+            
+            .sidebar:not(.expanded) .sidebar-logo h2, 
+            .sidebar:not(.expanded) .sidebar-subtitle,
+            .sidebar:not(.expanded) .user-info,
+            .sidebar:not(.expanded) .nav-section-title,
+            .sidebar:not(.expanded) .nav-item span {
+                display: none;
+            }
+            
+            .sidebar:not(.expanded) .sidebar-header,
+            .sidebar:not(.expanded) .user-profile,
+            .sidebar:not(.expanded) .nav-item {
+                text-align: center;
+                padding: 1rem;
+            }
+            
+            .sidebar:not(.expanded) .sidebar-logo,
+            .sidebar:not(.expanded) .nav-item {
+                justify-content: center;
+            }
+            
+            .sidebar:not(.expanded) .nav-item i {
+                margin-right: 0;
+            }
+            
+            .sidebar-toggle {
+                left: 70px;
+            }
+            
+            .sidebar.expanded .sidebar-toggle {
+                left: 260px;
+            }
+            
+            .main-content {
+                margin-left: 70px;
+            }
+            
+            .sidebar.expanded + .main-content {
+                margin-left: 260px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .search-box {
+                width: 100%;
+                margin-top: 1rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .sidebar {
+                transform: translateX(-100%);
+                z-index: 1000;
+            }
+            
+            .sidebar.expanded {
+                transform: translateX(0);
+                width: 260px;
+            }
+            
+            .sidebar-toggle {
+                left: 15px;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 0.8rem;
+            }
+        }
+        
+        /* 滚动条美化 */
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body>
+    <!-- 侧边栏导航 -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-robot"></i>
+                <h2>AI与Web3导航</h2>
+            </div>
+            <div class="sidebar-subtitle">后台管理系统</div>
+        </div>
+        
+        <div class="user-profile">
+            <div class="user-avatar">A</div>
+            <div class="user-info">
+                <div class="user-name">管理员</div>
+                <div class="user-role">超级管理员</div>
+            </div>
+        </div>
+        
+        <nav class="nav-menu">
+            <div class="nav-section">
+                <div class="nav-section-title">主要功能</div>
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-home"></i>
+                    <span>仪表盘</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-shapes"></i>
+                    <span>应用管理</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-folder"></i>
+                    <span>分类管理</span>
+                </a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-section-title">系统设置</div>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>系统设置</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-history"></i>
+                    <span>操作日志</span>
+                </a>
+            </div>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="admin_login.html" class="nav-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>退出登录</span>
+            </a>
+        </div>
+    </aside>
+    
+    <div class="sidebar-toggle" id="sidebarToggle">
+        <i class="fas fa-bars"></i>
+    </div>
+    
+    <!-- 主内容区域 -->
+    <main class="main-content">
+        <!-- 顶部栏 -->
+        <div class="topbar">
+            <h1 class="page-title">仪表盘概览</h1>
+            
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="搜索应用、分类或标签...">
+            </div>
+        </div>
+        
+        <!-- 仪表盘卡片 -->
+        <div class="dashboard-grid">
+            <div class="dash-card">
+                <div class="dash-card-icon" style="background-color: #e1f0f7; color: #00a3d9;">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="dash-card-value">1,247</div>
+                <div class="dash-card-label">总用户数</div>
+                <div class="dash-card-change change-up">
+                    <i class="fas fa-arrow-up"></i>12.5%
+                </div>
+            </div>
+            
+            <div class="dash-card">
+                <div class="dash-card-icon" style="background-color: #faecdb; color: #e69138;">
+                    <i class="fas fa-cubes"></i>
+                </div>
+                <div class="dash-card-value">358</div>
+                <div class="dash-card-label">应用总数</div>
+                <div class="dash-card-change change-up">
+                    <i class="fas fa-arrow-up"></i>8.3%
+                </div>
+            </div>
+            
+            <div class="dash-card">
+                <div class="dash-card-icon" style="background-color: #e3f2f1; color: #50b7b2;">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <div class="dash-card-value">28,657</div>
+                <div class="dash-card-label">本月浏览量</div>
+                <div class="dash-card-change change-up">
+                    <i class="fas fa-arrow-up"></i>17.9%
+                </div>
+            </div>
+            
+            <div class="dash-card">
+                <div class="dash-card-icon" style="background-color: #faecdb; color: #e69138;">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="dash-card-value">4.8</div>
+                <div class="dash-card-label">平均评分</div>
+                <div class="dash-card-change change-down">
+                    <i class="fas fa-arrow-down"></i>0.2
+                </div>
+            </div>
+        </div>
+        
+        <!-- 热门应用 -->
+        <div class="section-header">
+            <h2 class="section-title">热门应用</h2>
+        </div>
+        
+        <div class="apps-panel">
+            <ul class="app-list">
+                <li class="app-item">
+                    <div class="app-icon" style="background-color: var(--info-bg); color: var(--info-dark);">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="app-info">
+                        <div class="app-name">ChatGPT</div>
+                        <div class="app-category">
+                            <span>AI聊天</span>
+                            <span>文本生成</span>
+                        </div>
+                    </div>
+                    <div class="app-actions">
+                        <div class="app-action edit">
+                            <i class="fas fa-edit"></i>
+                        </div>
+                        <div class="app-action delete">
+                            <i class="fas fa-trash-alt"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="app-item">
+                    <div class="app-icon" style="background-color: var(--success-bg); color: var(--success-dark);">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <div class="app-info">
+                        <div class="app-name">Midjourney</div>
+                        <div class="app-category">
+                            <span>AI绘画</span>
+                            <span>图像生成</span>
+                        </div>
+                    </div>
+                    <div class="app-actions">
+                        <div class="app-action edit">
+                            <i class="fas fa-edit"></i>
+                        </div>
+                        <div class="app-action delete">
+                            <i class="fas fa-trash-alt"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="app-item">
+                    <div class="app-icon" style="background-color: rgba(229, 96, 69, 0.1); color: var(--secondary-color);">
+                        <i class="fas fa-cube"></i>
+                    </div>
+                    <div class="app-info">
+                        <div class="app-name">MetaMask</div>
+                        <div class="app-category">
+                            <span>Web3</span>
+                            <span>钱包</span>
+                        </div>
+                    </div>
+                    <div class="app-actions">
+                        <div class="app-action edit">
+                            <i class="fas fa-edit"></i>
+                        </div>
+                        <div class="app-action delete">
+                            <i class="fas fa-trash-alt"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="app-item">
+                    <div class="app-icon" style="background-color: var(--warning-bg); color: var(--warning-dark);">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="app-info">
+                        <div class="app-name">GitHub Copilot</div>
+                        <div class="app-category">
+                            <span>AI编程</span>
+                            <span>开发工具</span>
+                        </div>
+                    </div>
+                    <div class="app-actions">
+                        <div class="app-action edit">
+                            <i class="fas fa-edit"></i>
+                        </div>
+                        <div class="app-action delete">
+                            <i class="fas fa-trash-alt"></i>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </main>
+    
+    <script>
+        // 侧边栏切换
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('expanded');
+        });
+        
+        // 移动端侧边栏适配
+        function handleResize() {
+            const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            
+            if (window.innerWidth <= 992) {
+                sidebar.classList.add('expanded');
+                sidebarToggle.style.display = 'flex';
+            } else {
+                sidebar.classList.remove('expanded');
+                sidebarToggle.style.display = 'none';
+            }
+            
+            if (window.innerWidth <= 576) {
+                sidebar.classList.remove('expanded');
+            }
+        }
+        
+        // 初始化
+        window.addEventListener('load', handleResize);
+        window.addEventListener('resize', handleResize);
+    </script>
+</body>
+</html> 
